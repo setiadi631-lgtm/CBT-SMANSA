@@ -6,5 +6,5 @@
 
 const SUPABASE_CONFIG = {
   URL: "https://ravtpaupnlkafeifkcdq.supabase.co",
-  PUBLISHABLE_KEY: "ravtpaupnlkafeifkcdq"
+  PUBLISHABLE_KEY: "sb_publishable_vmpm5NqzIDh-iCx4lwfLtQ_BBwC3Phb"
 };

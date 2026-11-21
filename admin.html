@@ -23,20 +23,20 @@
         <h1 class="text-xl font-bold">Panel Admin & Pengawas CBT</h1>
         <p class="text-xs text-slate-400 mt-1">Masuk menggunakan akun guru/admin terdaftar di Supabase</p>
       </div>
-      <form id="form-admin-login" class="p-6 space-y-4">
-        <div id="admin-login-err" class="hidden p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm"></div>
+      <form id="form-admin-login" onsubmit="prosesLoginAdmin(event); return false;" class="p-6 space-y-4">
+        <div id="admin-login-err" class="hidden p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm font-medium"></div>
         <div>
           <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Email Admin / Pengawas</label>
-          <input type="email" id="admin-email" required placeholder="admin@sekolah.sch.id"
+          <input type="email" id="admin-email" name="email" required placeholder="admin@sekolah.sch.id"
             class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 outline-none" />
         </div>
         <div>
           <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Kata Sandi</label>
-          <input type="password" id="admin-password" required placeholder="••••••••"
+          <input type="password" id="admin-password" name="password" required placeholder="••••••••"
             class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 outline-none" />
         </div>
         <button type="submit" id="btn-admin-login"
-          class="w-full py-3 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold shadow">
+          class="w-full py-3 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold shadow transition">
           Masuk ke Dashboard
         </button>
         <div class="text-center pt-2">
@@ -56,28 +56,28 @@
       </div>
 
       <nav class="flex-1 p-3 space-y-1 overflow-x-auto flex lg:flex-col">
-        <button onclick="switchTab('pengawas')" id="nav-pengawas" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold bg-blue-700 text-white whitespace-nowrap">
+        <button type="button" onclick="switchTab('pengawas')" id="nav-pengawas" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold bg-blue-700 text-white whitespace-nowrap">
           1. Ruang Pengawas
         </button>
-        <button onclick="switchTab('paket')" id="nav-paket" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
+        <button type="button" onclick="switchTab('paket')" id="nav-paket" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
           2. Paket & Token
         </button>
-        <button onclick="switchTab('soal')" id="nav-soal" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
+        <button type="button" onclick="switchTab('soal')" id="nav-soal" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
           3. Bank Soal & Stimulus
         </button>
-        <button onclick="switchTab('peserta')" id="nav-peserta" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
+        <button type="button" onclick="switchTab('peserta')" id="nav-peserta" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
           4. Data Peserta & Kartu
         </button>
-        <button onclick="switchTab('nilai')" id="nav-nilai" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
+        <button type="button" onclick="switchTab('nilai')" id="nav-nilai" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
           5. Rekap Nilai & Uraian
         </button>
-        <button onclick="switchTab('sekolah')" id="nav-sekolah" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
+        <button type="button" onclick="switchTab('sekolah')" id="nav-sekolah" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
           6. Identitas Sekolah
         </button>
       </nav>
 
       <div class="p-4 border-t border-slate-800">
-        <button onclick="logoutAdmin()" class="w-full py-2 rounded-lg bg-slate-800 hover:bg-red-700 text-xs font-bold text-slate-300 hover:text-white transition">
+        <button type="button" onclick="logoutAdmin()" class="w-full py-2 rounded-lg bg-slate-800 hover:bg-red-700 text-xs font-bold text-slate-300 hover:text-white transition">
           Keluar Akun Admin
         </button>
       </div>
@@ -86,9 +86,7 @@
     <!-- Konten Utama -->
     <main class="flex-1 p-4 md:p-6 overflow-y-auto">
 
-      <!-- ================================================================ -->
-      <!-- MENU 1: RUANG PENGAWAS & PANTAUAN LANGSUNG                       -->
-      <!-- ================================================================ -->
+      <!-- MENU 1: RUANG PENGAWAS & PANTAUAN LANGSUNG -->
       <section id="tab-pengawas" class="tab-section space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -97,11 +95,10 @@
           </div>
           <div class="flex items-center gap-2">
             <select id="filter-paket-pengawas" onchange="loadPengawasData()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm font-semibold"></select>
-            <button onclick="loadPengawasData()" class="px-4 py-2 rounded-xl bg-blue-700 text-white text-sm font-bold hover:bg-blue-800">Muat Ulang</button>
+            <button type="button" onclick="loadPengawasData()" class="px-4 py-2 rounded-xl bg-blue-700 text-white text-sm font-bold hover:bg-blue-800">Muat Ulang</button>
           </div>
         </div>
 
-        <!-- Ringkasan Status -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div class="bg-white p-4 rounded-xl border border-slate-200">
             <div class="text-xs text-slate-500 font-semibold">Total Sesi Masuk</div>
@@ -121,7 +118,6 @@
           </div>
         </div>
 
-        <!-- Tabel Sesi Peserta -->
         <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
           <div class="px-5 py-3 bg-slate-50 border-b font-bold text-sm text-slate-700">Daftar Peserta Aktif pada Paket Terpilih</div>
           <div class="overflow-x-auto">
@@ -140,16 +136,13 @@
           </div>
         </div>
 
-        <!-- Aliran Log Kecurangan -->
         <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
           <div class="px-5 py-3 bg-red-50 border-b border-red-100 font-bold text-sm text-red-800">Log Deteksi Kecurangan Terbaru</div>
           <div id="list-log-kecurangan" class="divide-y divide-slate-100 max-h-72 overflow-y-auto p-3 text-xs"></div>
         </div>
       </section>
 
-      <!-- ================================================================ -->
-      <!-- MENU 2: PAKET & TOKEN UJIAN                                      -->
-      <!-- ================================================================ -->
+      <!-- MENU 2: PAKET & TOKEN UJIAN -->
       <section id="tab-paket" class="tab-section hidden space-y-5">
         <h2 class="text-xl font-extrabold text-slate-900">Paket & Token Ujian</h2>
 
@@ -211,16 +204,13 @@
         </div>
       </section>
 
-      <!-- ================================================================ -->
-      <!-- MENU 3: BANK SOAL TKA & STIMULUS (DENGAN UNGGAH GAMBAR OTOMATIS) -->
-      <!-- ================================================================ -->
+      <!-- MENU 3: BANK SOAL TKA & STIMULUS -->
       <section id="tab-soal" class="tab-section hidden space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <h2 class="text-xl font-extrabold text-slate-900">Bank Soal TKA & Stimulus</h2>
           <select id="filter-paket-soal" onchange="loadStimulusDanSoal()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm font-semibold"></select>
         </div>
 
-        <!-- Kelola Stimulus -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
           <h3 class="font-bold text-sm text-blue-900 border-b pb-2">A. Tambah Stimulus Wacana / Grafik (Opsional untuk Soal Grup)</h3>
           <form id="form-stimulus" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -244,7 +234,6 @@
           </form>
         </div>
 
-        <!-- Form Buat Soal Multi-Tipe -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
           <h3 class="font-bold text-sm text-blue-900 border-b pb-2">B. Tambah Butir Soal Baru (Semua Tipe TKA)</h3>
           <form id="form-soal" class="space-y-4">
@@ -290,7 +279,6 @@
               </div>
             </div>
 
-            <!-- Area Dinamis Opsi & Kunci Jawaban sesuai Tipe Soal -->
             <div id="dynamic-soal-fields" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3"></div>
 
             <div>
@@ -304,32 +292,28 @@
           </form>
         </div>
 
-        <!-- Daftar Soal Tersimpan -->
         <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
           <div class="px-5 py-3 bg-slate-50 border-b font-bold text-sm">Daftar Soal pada Paket Ini (<span id="count-soal-paket">0</span> soal)</div>
           <div id="list-bank-soal" class="divide-y divide-slate-100"></div>
         </div>
       </section>
 
-      <!-- ================================================================ -->
-      <!-- MENU 4: DATA PESERTA & CETAK KARTU                               -->
-      <!-- ================================================================ -->
+      <!-- MENU 4: DATA PESERTA & CETAK KARTU -->
       <section id="tab-peserta" class="tab-section hidden space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <h2 class="text-xl font-extrabold text-slate-900">Data Peserta & Cetak Kartu Ujian</h2>
           <div class="flex flex-wrap gap-2">
-            <button onclick="unduhTemplatePeserta()" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-xs font-bold">Unduh Template CSV</button>
+            <button type="button" onclick="unduhTemplatePeserta()" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-xs font-bold">Unduh Template CSV</button>
             <label class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">
               Impor CSV Peserta
               <input type="file" accept=".csv" onchange="imporCSVPeserta(this)" class="hidden" />
             </label>
-            <button onclick="cetakKartuPeserta()" class="px-4 py-2 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold">
+            <button type="button" onclick="cetakKartuPeserta()" class="px-4 py-2 rounded-xl bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold">
               Cetak Kartu Peserta
             </button>
           </div>
         </div>
 
-        <!-- Tambah Peserta Satuan -->
         <form id="form-peserta" class="bg-white p-4 rounded-2xl border border-slate-200 grid grid-cols-1 md:grid-cols-4 gap-3">
           <input type="text" id="pes-no" required placeholder="Nomor Peserta (cth: 2026003)" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
           <input type="text" id="pes-nama" required placeholder="Nama Lengkap Siswa" class="px-3 py-2 rounded-xl border border-slate-300 text-sm" />
@@ -353,15 +337,13 @@
         </div>
       </section>
 
-      <!-- ================================================================ -->
-      <!-- MENU 5: REKAP NILAI & KOREKSI URAIAN                             -->
-      <!-- ================================================================ -->
+      <!-- MENU 5: REKAP NILAI & KOREKSI URAIAN -->
       <section id="tab-nilai" class="tab-section hidden space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <h2 class="text-xl font-extrabold text-slate-900">Rekap Nilai & Koreksi Uraian</h2>
           <div class="flex gap-2">
             <select id="filter-paket-nilai" onchange="loadRekapNilai()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm font-semibold"></select>
-            <button onclick="eksporRekapCSV()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">Unduh Rekap Excel (CSV)</button>
+            <button type="button" onclick="eksporRekapCSV()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">Unduh Rekap Excel (CSV)</button>
           </div>
         </div>
 
@@ -382,9 +364,7 @@
         </div>
       </section>
 
-      <!-- ================================================================ -->
-      <!-- MENU 6: IDENTITAS SEKOLAH & KOP DOKUMEN                          -->
-      <!-- ================================================================ -->
+      <!-- MENU 6: IDENTITAS SEKOLAH & KOP DOKUMEN -->
       <section id="tab-sekolah" class="tab-section hidden space-y-5">
         <h2 class="text-xl font-extrabold text-slate-900">Identitas Sekolah & Kop Dokumen</h2>
         <form id="form-sekolah" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -452,19 +432,35 @@
     <div class="bg-white max-w-2xl w-full rounded-2xl p-6 shadow-2xl max-h-[85vh] overflow-y-auto space-y-4">
       <div class="flex justify-between items-center border-b pb-3">
         <h3 class="font-bold text-lg">Koreksi Jawaban Uraian</h3>
-        <button onclick="tutupModalKoreksi()" class="text-slate-500 font-bold text-xl">&times;</button>
+        <button type="button" onclick="tutupModalKoreksi()" class="text-slate-500 font-bold text-xl">&times;</button>
       </div>
       <div id="konten-modal-koreksi" class="space-y-4"></div>
     </div>
   </div>
 
-  <!-- AREA CETAK KARTU PESERTA (KHUSUS PRINT) -->
+  <!-- AREA CETAK KARTU PESERTA -->
   <div id="print-kartu-area" class="hidden p-6 bg-white"></div>
 
   <script>
     let sb = null;
-    if (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.URL.startsWith('https://') && !SUPABASE_CONFIG.URL.includes('GANTI_DENGAN')) {
-      sb = window.supabase.createClient(SUPABASE_CONFIG.URL, SUPABASE_CONFIG.PUBLISHABLE_KEY);
+    function tampilkanPesanLogin(pesan) {
+      const errEl = document.getElementById('admin-login-err');
+      if (errEl) {
+        errEl.textContent = pesan;
+        errEl.classList.remove('hidden');
+      }
+    }
+
+    try {
+      if (typeof window.supabase === 'undefined') {
+        tampilkanPesanLogin('Pustaka Supabase gagal dimuat. Periksa koneksi internet Anda lalu muat ulang halaman.');
+      } else if (typeof SUPABASE_CONFIG === 'undefined' || !SUPABASE_CONFIG.URL || !SUPABASE_CONFIG.URL.startsWith('https://') || SUPABASE_CONFIG.URL.includes('GANTI_DENGAN')) {
+        tampilkanPesanLogin('File config.js belum terbaca atau URL Supabase belum diisi dengan benar.');
+      } else {
+        sb = window.supabase.createClient(SUPABASE_CONFIG.URL, SUPABASE_CONFIG.PUBLISHABLE_KEY);
+      }
+    } catch (initErr) {
+      tampilkanPesanLogin('Kesalahan inisialisasi koneksi: ' + initErr.message);
     }
 
     let cacheSekolah = {};
@@ -472,37 +468,53 @@
     let cachePeserta = [];
     let cacheRekap = [];
 
-    // ========================================================================
-    // AUTENTIKASI ADMIN / PENGAWAS
-    // ========================================================================
     async function cekSesiAdmin() {
       if (!sb) return;
-      const { data: { session } } = await sb.auth.getSession();
-      if (session) {
-        document.getElementById('admin-login-screen').classList.add('hidden');
-        document.getElementById('admin-dashboard').classList.remove('hidden');
-        document.getElementById('admin-dashboard').classList.add('flex');
-        initDashboard();
+      try {
+        const { data: { session } } = await sb.auth.getSession();
+        if (session) {
+          document.getElementById('admin-login-screen').classList.add('hidden');
+          document.getElementById('admin-dashboard').classList.remove('hidden');
+          document.getElementById('admin-dashboard').classList.add('flex');
+          initDashboard();
+        }
+      } catch (err) {
+        tampilkanPesanLogin('Gagal memeriksa sesi: ' + err.message);
       }
     }
     cekSesiAdmin();
 
-    document.getElementById('form-admin-login').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!sb) { alert('Isi config.js terlebih dahulu!'); return; }
+    async function prosesLoginAdmin(e) {
+      if (e) e.preventDefault();
+      if (!sb) {
+        tampilkanPesanLogin('Koneksi Supabase belum siap. Pastikan file config.js berada satu folder dengan admin.html.');
+        return false;
+      }
       const email = document.getElementById('admin-email').value.trim();
       const password = document.getElementById('admin-password').value;
       const errEl = document.getElementById('admin-login-err');
-      errEl.classList.add('hidden');
+      const btn = document.getElementById('btn-admin-login');
 
-      const { error } = await sb.auth.signInWithPassword({ email, password });
-      if (error) {
-        errEl.textContent = 'Login gagal: ' + error.message;
-        errEl.classList.remove('hidden');
-      } else {
-        cekSesiAdmin();
+      errEl.classList.add('hidden');
+      btn.disabled = true;
+      btn.textContent = 'Memeriksa Akun...';
+
+      try {
+        const { error } = await sb.auth.signInWithPassword({ email, password });
+        if (error) {
+          tampilkanPesanLogin('Login gagal: ' + error.message);
+          btn.disabled = false;
+          btn.textContent = 'Masuk ke Dashboard';
+        } else {
+          await cekSesiAdmin();
+        }
+      } catch (err) {
+        tampilkanPesanLogin('Terjadi gangguan jaringan: ' + err.message);
+        btn.disabled = false;
+        btn.textContent = 'Masuk ke Dashboard';
       }
-    });
+      return false;
+    }
 
     async function logoutAdmin() {
       await sb.auth.signOut();
@@ -530,9 +542,6 @@
       loadRekapNilai();
     }
 
-    // ========================================================================
-    // FUNGSI UNGGAH GAMBAR OTOMATIS KE SUPABASE STORAGE
-    // ========================================================================
     async function uploadGambarOtomatis(inputEl, targetHiddenId, previewImgId) {
       const file = inputEl.files[0];
       if (!file) return;
@@ -553,9 +562,6 @@
       }
     }
 
-    // ========================================================================
-    // MENU 6: IDENTITAS SEKOLAH
-    // ========================================================================
     async function loadIdentitasSekolah() {
       const { data } = await sb.from('identitas_sekolah').select('*').eq('id', 1).single();
       if (!data) return;
@@ -605,9 +611,6 @@
       }
     });
 
-    // ========================================================================
-    // MENU 2: PAKET & TOKEN UJIAN
-    // ========================================================================
     function generateTokenRandom() {
       const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
       let res = '';
@@ -624,7 +627,6 @@
       const { data } = await sb.from('paket_ujian').select('*').order('created_at', { ascending: false });
       cachePaket = data || [];
 
-      // Isi semua dropdown paket
       const opts = cachePaket.map(p => `<option value="${p.id}">${p.judul_ujian} (${p.token_ujian})</option>`).join('');
       ['filter-paket-pengawas', 'filter-paket-soal', 'filter-paket-nilai'].forEach(id => {
         document.getElementById(id).innerHTML = opts || '<option value="">Belum ada paket</option>';
@@ -644,8 +646,8 @@
             </span>
           </td>
           <td class="p-3 text-right space-x-2">
-            <button onclick='editPaket(${JSON.stringify(p)})' class="text-blue-600 font-semibold text-xs hover:underline">Edit</button>
-            <button onclick="hapusPaket('${p.id}')" class="text-red-600 font-semibold text-xs hover:underline">Hapus</button>
+            <button type="button" onclick='editPaket(${JSON.stringify(p)})' class="text-blue-600 font-semibold text-xs hover:underline">Edit</button>
+            <button type="button" onclick="hapusPaket('${p.id}')" class="text-red-600 font-semibold text-xs hover:underline">Hapus</button>
           </td>
         </tr>
       `).join('');
@@ -696,9 +698,6 @@
       loadPaketUjian();
     }
 
-    // ========================================================================
-    // MENU 1: RUANG PENGAWAS & PANTAUAN LANGSUNG
-    // ========================================================================
     async function loadPengawasData() {
       const paketId = document.getElementById('filter-paket-pengawas').value;
       if (!paketId) return;
@@ -732,14 +731,13 @@
             <td class="p-3"><span class="font-bold ${r.jumlah_pelanggaran > 0 ? 'text-red-600' : 'text-slate-600'}">${r.jumlah_pelanggaran}x</span></td>
             <td class="p-3">${badge}</td>
             <td class="p-3 text-right space-x-1.5">
-              ${r.status_sesi === 'terkunci' ? `<button onclick="bukaKunciSesi('${r.id}')" class="px-2.5 py-1 rounded bg-amber-500 text-white text-xs font-bold hover:bg-amber-600">Buka Kunci</button>` : ''}
-              <button onclick="resetSesiPeserta('${r.id}')" class="px-2.5 py-1 rounded bg-slate-200 text-slate-700 text-xs font-bold hover:bg-red-600 hover:text-white">Reset</button>
+              ${r.status_sesi === 'terkunci' ? `<button type="button" onclick="bukaKunciSesi('${r.id}')" class="px-2.5 py-1 rounded bg-amber-500 text-white text-xs font-bold hover:bg-amber-600">Buka Kunci</button>` : ''}
+              <button type="button" onclick="resetSesiPeserta('${r.id}')" class="px-2.5 py-1 rounded bg-slate-200 text-slate-700 text-xs font-bold hover:bg-red-600 hover:text-white">Reset</button>
             </td>
           </tr>
         `;
       }).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">Belum ada peserta masuk pada paket ini.</td></tr>';
 
-      // Muat log kecurangan terbaru
       const { data: logs } = await sb
         .from('log_kecurangan')
         .select('*, peserta(nama_lengkap, no_peserta, kelas)')
@@ -769,9 +767,6 @@
       loadPengawasData();
     }
 
-    // ========================================================================
-    // MENU 3: BANK SOAL MULTI-TIPE TKA & STIMULUS
-    // ========================================================================
     function renderEditorTipeSoal() {
       const tipe = document.getElementById('soal-tipe').value;
       const box = document.getElementById('dynamic-soal-fields');
@@ -912,7 +907,6 @@
             pasangan[`L${i}`] = `R${i}`;
           }
         }
-        // Acak urutan kanan di tampilan soal
         kanan.sort(() => Math.random() - 0.5);
         struktur = { kiri, kanan };
         kunci = { pasangan };
@@ -974,7 +968,7 @@
             </div>
             <p class="text-sm text-slate-800 font-medium">${s.pertanyaan}</p>
           </div>
-          <button onclick="hapusSoal('${s.id}')" class="text-red-600 text-xs font-bold hover:underline shrink-0">Hapus</button>
+          <button type="button" onclick="hapusSoal('${s.id}')" class="text-red-600 text-xs font-bold hover:underline shrink-0">Hapus</button>
         </div>
       `).join('') || '<p class="p-4 text-center text-slate-400 text-sm">Belum ada soal pada paket ini.</p>';
     }
@@ -985,9 +979,6 @@
       loadStimulusDanSoal();
     }
 
-    // ========================================================================
-    // MENU 4: DATA PESERTA & CETAK KARTU
-    // ========================================================================
     async function loadPeserta() {
       const { data } = await sb.from('peserta').select('*').order('kelas', { ascending: true }).order('no_peserta', { ascending: true });
       cachePeserta = data || [];
@@ -1002,10 +993,10 @@
             </span>
           </td>
           <td class="p-3 text-right space-x-2">
-            <button onclick="toggleAktifPeserta('${p.id}', ${!p.aktif})" class="text-blue-600 text-xs font-semibold hover:underline">
+            <button type="button" onclick="toggleAktifPeserta('${p.id}', ${!p.aktif})" class="text-blue-600 text-xs font-semibold hover:underline">
               ${p.aktif ? 'Nonaktifkan' : 'Aktifkan'}
             </button>
-            <button onclick="hapusPeserta('${p.id}')" class="text-red-600 text-xs font-semibold hover:underline">Hapus</button>
+            <button type="button" onclick="hapusPeserta('${p.id}')" class="text-red-600 text-xs font-semibold hover:underline">Hapus</button>
           </td>
         </tr>
       `).join('');
@@ -1038,10 +1029,7 @@
     }
 
     function unduhTemplatePeserta() {
-      const csv = 'no_peserta,nama_lengkap,kelas
-2026010,Ahmad Fauzi,XII IPA 1
-2026011,Dewi Lestari,XII IPS 2
-';
+      const csv = 'no_peserta,nama_lengkap,kelas\n2026010,Ahmad Fauzi,XII IPA 1\n2026011,Dewi Lestari,XII IPS 2\n';
       downloadFile(csv, 'template_peserta_cbt.csv', 'text/csv');
     }
 
@@ -1050,8 +1038,7 @@
       if (!file) return;
       const reader = new FileReader();
       reader.onload = async (e) => {
-        const lines = e.target.result.split(/?
-/).filter(Boolean);
+        const lines = e.target.result.split(/\r?\n/).filter(Boolean);
         const rows = [];
         for (let i = 1; i < lines.length; i++) {
           const cols = lines[i].split(/[,;]/);
@@ -1106,9 +1093,6 @@
       window.print();
     }
 
-    // ========================================================================
-    // MENU 5: REKAP NILAI & KOREKSI URAIAN
-    // ========================================================================
     async function loadRekapNilai() {
       const paketId = document.getElementById('filter-paket-nilai').value;
       if (!paketId) return;
@@ -1131,7 +1115,7 @@
           <td class="p-3 text-xs">${r.jumlah_pelanggaran}x</td>
           <td class="p-3 font-black text-base text-blue-800">${r.skor_akhir ?? '-'}</td>
           <td class="p-3 text-right">
-            <button onclick="bukaKoreksiUraian('${r.id}')" class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-bold hover:bg-indigo-100">
+            <button type="button" onclick="bukaKoreksiUraian('${r.id}')" class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-bold hover:bg-indigo-100">
               Cek / Koreksi Uraian
             </button>
           </td>
@@ -1177,7 +1161,7 @@
               </div>
             `;
           }).join('')}
-          <button onclick="simpanNilaiUraian('${sesi.id}', ${sesi.skor_akhir || 0}, ${totalBobot})"
+          <button type="button" onclick="simpanNilaiUraian('${sesi.id}', ${sesi.skor_akhir || 0}, ${totalBobot})"
             class="w-full py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-sm">
             Simpan Tambahan Nilai Uraian
           </button>
@@ -1205,12 +1189,10 @@
     }
 
     function eksporRekapCSV() {
-      const header = 'No Peserta,Nama Lengkap,Kelas,Status,Pelanggaran,Nilai Akhir
-';
+      const header = 'No Peserta,Nama Lengkap,Kelas,Status,Pelanggaran,Nilai Akhir\n';
       const rows = cacheRekap.map(r =>
         `"${r.peserta?.no_peserta || ''}","${r.peserta?.nama_lengkap || ''}","${r.peserta?.kelas || ''}","${r.status_sesi}",${r.jumlah_pelanggaran},${r.skor_akhir ?? 0}`
-      ).join('
-');
+      ).join('\n');
       downloadFile(header + rows, 'rekap_nilai_cbt_tka.csv', 'text/csv');
     }
 

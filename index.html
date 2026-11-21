@@ -62,7 +62,7 @@
           <p class="font-bold">Aturan Ruang Ujian Anti-Kecurangan:</p>
           <ul class="list-disc pl-4 space-y-0.5 text-blue-800">
             <li>Ujian otomatis masuk ke <strong>Mode Layar Penuh</strong>.</li>
-            <li>Dilarang membelah layar (<em>split screen</em>), pindah tab, atau keluar aplikasi.</li>
+            <li>Dilarang membelah layar, pindah tab, atau keluar aplikasi.</li>
             <li>Pelanggaran melebihi batas akan <strong>mengunci ujian otomatis</strong>.</li>
           </ul>
         </div>
@@ -81,7 +81,6 @@
 
   <!-- LAYAR 2: RUANG UJIAN AKTIF -->
   <div id="screen-exam" class="hidden flex-col min-h-screen">
-    <!-- Top Bar -->
     <header class="bg-blue-900 text-white px-4 py-2.5 shadow-md flex flex-wrap items-center justify-between gap-3 sticky top-0 z-30">
       <div class="flex items-center gap-3">
         <img id="exam-logo-sekolah" src="" alt="Logo" class="h-9 w-9 object-contain bg-white rounded-lg p-0.5 hidden" />
@@ -95,36 +94,29 @@
       </div>
 
       <div class="flex items-center gap-2 md:gap-3">
-        <!-- Font scale -->
         <div class="hidden sm:flex items-center bg-blue-950/60 rounded-lg p-0.5 border border-blue-700">
           <button type="button" onclick="setFontSize('sm')" class="px-2 py-1 text-xs font-bold hover:bg-blue-800 rounded">A-</button>
           <button type="button" onclick="setFontSize('md')" class="px-2 py-1 text-xs font-bold hover:bg-blue-800 rounded">A</button>
           <button type="button" onclick="setFontSize('lg')" class="px-2 py-1 text-xs font-bold hover:bg-blue-800 rounded">A+</button>
         </div>
 
-        <!-- Pelanggaran Badge -->
         <div id="badge-pelanggaran" class="px-2.5 py-1.5 rounded-lg bg-slate-800 border border-slate-600 text-xs font-semibold flex items-center gap-1.5" title="Jumlah Peringatan Pelanggaran">
           <span class="w-2 h-2 rounded-full bg-emerald-400" id="dot-pelanggaran"></span>
           <span>Peringatan: <strong id="text-pelanggaran">0/3</strong></span>
         </div>
 
-        <!-- Timer -->
         <div class="px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-mono font-extrabold text-sm md:text-base shadow-inner" id="exam-timer">
           00:00:00
         </div>
 
-        <!-- Toggle Daftar Soal Mobile -->
         <button type="button" onclick="toggleNavDrawer()" class="lg:hidden px-3 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-600 text-xs font-bold">
           Daftar Soal
         </button>
       </div>
     </header>
 
-    <!-- Main Content -->
     <div class="flex-1 flex max-w-7xl w-full mx-auto p-3 md:p-5 gap-4">
-      <!-- Area Soal -->
       <main class="flex-1 bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col overflow-hidden">
-        <!-- Subheader Nomor & Tipe -->
         <div class="px-5 py-3 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
           <div class="flex items-center gap-2.5">
             <span class="px-3 py-1 rounded-lg bg-blue-700 text-white font-bold text-sm">Soal No. <span id="current-no">1</span></span>
@@ -133,12 +125,8 @@
           <span id="save-indicator" class="text-xs text-emerald-600 font-medium">Tersimpan otomatis</span>
         </div>
 
-        <!-- Body Soal (Split jika ada stimulus, 1 kolom jika tidak) -->
-        <div id="soal-body-container" class="flex-1 p-5 overflow-y-auto exam-text-md">
-          <!-- Diisi via JavaScript -->
-        </div>
+        <div id="soal-body-container" class="flex-1 p-5 overflow-y-auto exam-text-md"></div>
 
-        <!-- Footer Navigasi -->
         <div class="px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
           <button type="button" id="btn-prev" onclick="prevSoal()"
             class="px-4 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 font-semibold text-sm text-slate-700 disabled:opacity-40">
@@ -162,7 +150,6 @@
         </div>
       </main>
 
-      <!-- Sidebar Navigasi Nomor Soal (Desktop) -->
       <aside id="nav-sidebar" class="hidden lg:flex flex-col w-72 bg-white rounded-2xl shadow-sm border border-slate-200 p-4 h-fit sticky top-20">
         <h3 class="font-bold text-sm text-slate-700 mb-3 pb-2 border-b border-slate-100">Navigasi Nomor Soal</h3>
         <div id="grid-nomor-desktop" class="grid grid-cols-5 gap-2 mb-4"></div>
@@ -176,6 +163,33 @@
           Kumpulkan Ujian
         </button>
       </aside>
+    </div>
+  </div>
+
+  <!-- MODAL INFO INTERNAL (PENGGANTI ALERT BROWSER AGAR LAYAR PENUH TIDAK LEPAS) -->
+  <div id="modal-info-internal" class="fixed inset-0 bg-slate-900/60 z-40 hidden items-center justify-center p-4">
+    <div class="bg-white max-w-sm w-full rounded-2xl p-5 shadow-2xl border border-slate-200 text-center space-y-4">
+      <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mx-auto font-extrabold text-xl">i</div>
+      <p id="modal-info-text" class="text-sm text-slate-700 font-medium"></p>
+      <button type="button" onclick="tutupModalInfo()" class="w-full py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm">
+        Mengerti
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL KONFIRMASI SELESAI (PENGGANTI CONFIRM BROWSER AGAR LAYAR PENUH TIDAK LEPAS) -->
+  <div id="modal-konfirmasi-selesai" class="fixed inset-0 bg-slate-900/70 z-40 hidden items-center justify-center p-4">
+    <div class="bg-white max-w-md w-full rounded-2xl p-6 shadow-2xl border border-slate-200 space-y-4">
+      <h3 class="text-lg font-extrabold text-slate-900">Konfirmasi Pengumpulan Ujian</h3>
+      <p id="modal-konfirmasi-text" class="text-sm text-slate-700"></p>
+      <div class="flex gap-3 pt-2">
+        <button type="button" onclick="tutupModalKonfirmasi()" class="flex-1 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-sm">
+          Batal
+        </button>
+        <button type="button" onclick="tutupModalKonfirmasi(); kumpulkanUjianOtomatis();" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm">
+          Ya, Kumpulkan
+        </button>
+      </div>
     </div>
   </div>
 
@@ -246,7 +260,6 @@
   </div>
 
   <script>
-    // Inisialisasi Supabase Client
     let sb = null;
     if (typeof SUPABASE_CONFIG !== 'undefined' && SUPABASE_CONFIG.URL.startsWith('https://') && !SUPABASE_CONFIG.URL.includes('GANTI_DENGAN')) {
       sb = window.supabase.createClient(SUPABASE_CONFIG.URL, SUPABASE_CONFIG.PUBLISHABLE_KEY);
@@ -254,15 +267,14 @@
       document.getElementById('config-warning').classList.remove('hidden');
     }
 
-    // State Ujian
     let state = {
       peserta: null,
       paket: null,
       sesi: null,
       soalList: [],
       currentIndex: 0,
-      jawaban: {}, // { soalId: { ... } }
-      ragu: {},    // { soalId: true }
+      jawaban: {},
+      ragu: {},
       timerInterval: null,
       pollInterval: null,
       splitCheckInterval: null,
@@ -272,7 +284,25 @@
       selectedLeftMatch: null
     };
 
-    // Muat Identitas Sekolah saat awal buka
+    function tampilkanModalInfo(pesan) {
+      document.getElementById('modal-info-text').textContent = pesan;
+      const m = document.getElementById('modal-info-internal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function tutupModalInfo() {
+      const m = document.getElementById('modal-info-internal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function tutupModalKonfirmasi() {
+      const m = document.getElementById('modal-konfirmasi-selesai');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
     async function loadIdentitasSekolah() {
       if (!sb) return;
       const { data } = await sb.from('identitas_sekolah').select('*').eq('id', 1).single();
@@ -293,11 +323,10 @@
     }
     loadIdentitasSekolah();
 
-    // Login Peserta & Mulai Ujian
     document.getElementById('form-login-peserta').addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!sb) {
-        alert('Konfigurasi Supabase di config.js belum diisi!');
+        tampilkanModalInfo('Konfigurasi Supabase di config.js belum diisi!');
         return;
       }
       const noPeserta = document.getElementById('input-no-peserta').value.trim();
@@ -310,7 +339,6 @@
       btn.textContent = 'Memverifikasi Data...';
 
       try {
-        // Minta mode layar penuh segera saat klik interaksi pengguna
         if (document.documentElement.requestFullscreen) {
           try { await document.documentElement.requestFullscreen(); } catch (_) {}
         }
@@ -332,19 +360,16 @@
           return;
         }
 
-        // Susun soal sesuai urutan_soal dari sesi
         const mapSoal = {};
         data.soal.forEach(s => { mapSoal[s.id] = s; });
         const ordered = [];
         (data.sesi.urutan_soal || []).forEach(id => {
           if (mapSoal[id]) ordered.push(mapSoal[id]);
         });
-        // Fallback jika ada soal baru
         data.soal.forEach(s => {
           if (!ordered.find(x => x.id === s.id)) ordered.push(s);
         });
 
-        // Acak opsi jika diaktifkan
         if (data.paket.acak_opsi) {
           ordered.forEach(s => {
             if ((s.tipe_soal === 'pg' || s.tipe_soal === 'pgk_mcma') && s.opsi_dan_struktur && Array.isArray(s.opsi_dan_struktur.opsi)) {
@@ -361,7 +386,6 @@
         state.sisaDetik = data.sesi.sisa_detik;
         state.examActive = true;
 
-        // Tampilkan layar ujian
         document.getElementById('screen-login').classList.add('hidden');
         document.getElementById('screen-exam').classList.remove('hidden');
         document.getElementById('screen-exam').classList.add('flex');
@@ -400,18 +424,14 @@
       return arr;
     }
 
-    // ========================================================================
-    // MESIN ANTI-KECURANGAN (SPLIT SCREEN, FULLSCREEN, TAB SWITCH, COPY-PASTE)
-    // ========================================================================
     function aktifkanAntiKecurangan() {
-      // 1. Blokir klik kanan & salin-tempel
       document.addEventListener('contextmenu', (e) => {
         if (state.examActive) e.preventDefault();
       });
       document.addEventListener('copy', (e) => {
         if (state.examActive) {
           e.preventDefault();
-          laporkanPelanggaran('Percobaan Menyalin Teks', 'Peserta menekan perintah salin/copy.');
+          laporkanPelanggaran('Percobaan Menyalin Teks', 'Peserta menekan perintah salin.');
         }
       });
       document.addEventListener('keydown', (e) => {
@@ -426,21 +446,18 @@
         }
       });
 
-      // 2. Deteksi Pindah Tab / Minimize
       document.addEventListener('visibilitychange', () => {
         if (state.examActive && document.hidden) {
           laporkanPelanggaran('Pindah Tab / Aplikasi', 'Peserta meninggalkan tab browser ujian.');
         }
       });
 
-      // 3. Deteksi Keluar Layar Penuh
       document.addEventListener('fullscreenchange', () => {
         if (state.examActive && !document.fullscreenElement) {
           laporkanPelanggaran('Keluar Mode Layar Penuh', 'Peserta keluar dari tampilan layar penuh.');
         }
       });
 
-      // 4. Deteksi Split Screen / Jendela Mengambang
       window.addEventListener('resize', cekSplitScreen);
       state.splitCheckInterval = setInterval(cekSplitScreen, 2000);
     }
@@ -449,7 +466,9 @@
       if (!state.examActive) return;
       const ratioW = window.innerWidth / window.screen.width;
       const ratioH = window.innerHeight / window.screen.height;
-      if (ratioW < 0.80 || ratioH < 0.72) {
+      const isTyping = document.activeElement && ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
+
+      if (ratioW < 0.80 || (!isTyping && ratioH < 0.68)) {
         laporkanPelanggaran(
           'Layar Terbelah (Split Screen)',
           `Ukuran jendela menyusut menjadi ${Math.round(ratioW * 100)}% x ${Math.round(ratioH * 100)}% layar.`
@@ -460,12 +479,12 @@
     async function laporkanPelanggaran(jenis, keterangan) {
       if (!state.examActive) return;
       const now = Date.now();
-      // Cegah pencatatan ganda dalam 3 detik untuk satu aksi yang sama
       if (now - state.lastViolationTime < 3000) return;
       state.lastViolationTime = now;
 
-      // Tampilkan langsung layar peringatan
-      document.getElementById('warning-reason').textContent = `${jenis}: ${keterangan}`;
+      const reasonEl = document.getElementById('warning-reason');
+      reasonEl.className = 'text-sm text-slate-700 mb-3';
+      reasonEl.textContent = `${jenis}: ${keterangan}`;
       document.getElementById('overlay-warning').classList.remove('hidden');
       document.getElementById('overlay-warning').classList.add('flex');
 
@@ -504,11 +523,13 @@
           await document.documentElement.requestFullscreen();
         }
       } catch (_) {}
-      // Cek ulang apakah masih split screen
+
       const ratioW = window.innerWidth / window.screen.width;
       const ratioH = window.innerHeight / window.screen.height;
-      if (ratioW < 0.80 || ratioH < 0.72) {
-        alert('Layar perangkat Anda masih dalam mode terbelah (split screen). Tutup aplikasi pendamping terlebih dahulu!');
+      if (ratioW < 0.80 || ratioH < 0.68) {
+        const reasonEl = document.getElementById('warning-reason');
+        reasonEl.className = 'text-sm text-red-700 font-bold mb-3';
+        reasonEl.textContent = 'Layar perangkat Anda masih terbelah. Tutup aplikasi pendamping terlebih dahulu lalu tekan tombol di bawah.';
         return;
       }
       document.getElementById('overlay-warning').classList.add('hidden');
@@ -523,9 +544,6 @@
       else dot.className = 'w-2 h-2 rounded-full bg-red-500';
     }
 
-    // ========================================================================
-    // TIMER & SINKRONISASI STATUS PENGAWAS
-    // ========================================================================
     function startTimers() {
       updateTimerText();
       state.timerInterval = setInterval(() => {
@@ -538,7 +556,6 @@
         updateTimerText();
       }, 1000);
 
-      // Polling status setiap 5 detik (mendeteksi jika pengawas membuka kunci atau menghentikan paksa)
       state.pollInterval = setInterval(async () => {
         if (!state.sesi) return;
         const { data } = await sb.rpc('cek_status_sesi', {
@@ -548,7 +565,6 @@
         if (!data) return;
 
         if (data.status_sesi === 'mengerjakan' && !state.examActive && !document.getElementById('overlay-locked').classList.contains('hidden')) {
-          // Pengawas membuka kunci!
           state.examActive = true;
           document.getElementById('overlay-locked').classList.add('hidden');
           document.getElementById('overlay-locked').classList.remove('flex');
@@ -572,9 +588,6 @@
       }
     }
 
-    // ========================================================================
-    // RENDER SOAL MULTI-TIPE TKA
-    // ========================================================================
     const labelTipe = {
       'pg': 'Pilihan Ganda',
       'pgk_mcma': 'PG Kompleks (Multi-Jawaban)',
@@ -639,7 +652,6 @@
       const saved = state.jawaban[soal.id] || {};
       const struktur = soal.opsi_dan_struktur || {};
 
-      // 1. Pilihan Ganda Sederhana
       if (soal.tipe_soal === 'pg') {
         const opsi = struktur.opsi || [];
         return `<div class="space-y-2.5">` + opsi.map(o => {
@@ -657,7 +669,6 @@
         }).join('') + `</div>`;
       }
 
-      // 2. PGK Multi-Jawaban (MCMA)
       if (soal.tipe_soal === 'pgk_mcma') {
         const opsi = struktur.opsi || [];
         const listJwb = Array.isArray(saved.jawaban) ? saved.jawaban : [];
@@ -676,7 +687,6 @@
         }).join('') + `</div>`;
       }
 
-      // 3 & 4. PGK Kategori Matriks (Benar/Salah atau Sesuai/Tidak Sesuai)
       if (soal.tipe_soal === 'pgk_kategori_bs' || soal.tipe_soal === 'pgk_kategori_sesuai') {
         const pernyataan = struktur.pernyataan || [];
         const colA = soal.tipe_soal === 'pgk_kategori_bs' ? 'Benar' : 'Sesuai';
@@ -713,14 +723,12 @@
         `;
       }
 
-      // 5. Menjodohkan
       if (soal.tipe_soal === 'menjodohkan') {
         const kiri = struktur.kiri || [];
         const kanan = struktur.kanan || [];
         const pasangan = saved.pasangan || {};
         const colors = ['bg-blue-600', 'bg-emerald-600', 'bg-purple-600', 'bg-amber-600', 'bg-rose-600', 'bg-cyan-600'];
 
-        // Map warna per item kiri
         const colorMapKiri = {};
         const colorMapKanan = {};
         kiri.forEach((item, idx) => {
@@ -740,7 +748,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="space-y-2">
                 <div class="text-xs font-bold uppercase text-slate-500">Premis / Pernyataan</div>
-                ${kiri.map((item, idx) => {
+                ${kiri.map((item) => {
                   const isSel = state.selectedLeftMatch === item.id;
                   const pairedColor = colorMapKiri[item.id];
                   return `
@@ -770,7 +778,6 @@
         `;
       }
 
-      // 6. Isian Singkat
       if (soal.tipe_soal === 'isian_singkat') {
         return `
           <div>
@@ -783,7 +790,6 @@
         `;
       }
 
-      // 7. Uraian
       if (soal.tipe_soal === 'uraian') {
         const val = saved.jawaban || '';
         return `
@@ -799,7 +805,6 @@
       return '';
     }
 
-    // Handler Interaksi Jawaban
     function pilihPG(soalId, kode) {
       state.jawaban[soalId] = { jawaban: kode };
       simpanKeServer();
@@ -834,11 +839,10 @@
 
     function klikJodohKanan(soalId, rightId) {
       if (!state.selectedLeftMatch) {
-        alert('Klik terlebih dahulu salah satu pernyataan di Kolom Kiri.');
+        tampilkanModalInfo('Klik terlebih dahulu salah satu pernyataan di Kolom Kiri.');
         return;
       }
       const cur = (state.jawaban[soalId] && state.jawaban[soalId].pasangan) ? { ...state.jawaban[soalId].pasangan } : {};
-      // Hapus jika rightId sudah dipakai item lain
       Object.keys(cur).forEach(k => { if (cur[k] === rightId) delete cur[k]; });
       cur[state.selectedLeftMatch] = rightId;
       state.jawaban[soalId] = { pasangan: cur };
@@ -881,7 +885,6 @@
       }
     }
 
-    // Navigasi Nomor Soal
     function isSoalTerjawab(soal) {
       const j = state.jawaban[soal.id];
       if (!j) return false;
@@ -942,15 +945,15 @@
       el.classList.add('exam-text-' + size);
     }
 
-    // Selesaikan Ujian
     function konfirmasiSelesai() {
       const belum = state.soalList.filter(s => !isSoalTerjawab(s)).length;
       const pesan = belum > 0
         ? `Masih ada ${belum} soal yang belum dijawab. Apakah Anda yakin ingin mengakhiri ujian sekarang?`
         : 'Semua soal sudah terjawab. Apakah Anda yakin ingin mengumpulkan jawaban ujian sekarang?';
-      if (confirm(pesan)) {
-        kumpulkanUjianOtomatis();
-      }
+      document.getElementById('modal-konfirmasi-text').textContent = pesan;
+      const m = document.getElementById('modal-konfirmasi-selesai');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
     }
 
     async function kumpulkanUjianOtomatis() {
@@ -981,7 +984,7 @@
           document.getElementById('finish-uraian-note').classList.remove('hidden');
         }
       } catch (err) {
-        alert('Gagal mengirim hasil ujian: ' + err.message);
+        tampilkanModalInfo('Gagal mengirim hasil ujian: ' + err.message);
       }
     }
 

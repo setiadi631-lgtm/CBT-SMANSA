@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Admin & Pengawas CBT TKA</title>
+  <title>Dashboard Admin & Pengawas CBT</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
@@ -16,23 +16,25 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen">
 
-  <!-- LAYAR LOGIN PENGAWAS / ADMIN -->
+  <!-- ===================================================================== -->
+  <!-- LAYAR LOGIN PENGAWAS / ADMIN                                          -->
+  <!-- ===================================================================== -->
   <div id="admin-login-screen" class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
       <div class="bg-slate-900 p-6 text-white text-center">
-        <h1 class="text-xl font-bold">Panel Admin & Pengawas CBT</h1>
+        <h1 class="text-xl font-bold">Panel Admin &amp; Pengawas CBT</h1>
         <p class="text-xs text-slate-400 mt-1">Masuk menggunakan akun guru/admin terdaftar di Supabase</p>
       </div>
       <form id="form-admin-login" onsubmit="prosesLoginAdmin(event); return false;" class="p-6 space-y-4">
         <div id="admin-login-err" class="hidden p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm font-medium"></div>
         <div>
           <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Email Admin / Pengawas</label>
-          <input type="email" id="admin-email" name="email" required placeholder="admin@sekolah.sch.id"
+          <input type="email" id="admin-email" required placeholder="admin@sekolah.sch.id"
             class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 outline-none" />
         </div>
         <div>
           <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Kata Sandi</label>
-          <input type="password" id="admin-password" name="password" required placeholder="••••••••"
+          <input type="password" id="admin-password" required placeholder="••••••••"
             class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 outline-none" />
         </div>
         <button type="submit" id="btn-admin-login"
@@ -46,12 +48,14 @@
     </div>
   </div>
 
-  <!-- DASHBOARD UTAMA ADMIN (6 MENU) -->
+  <!-- ===================================================================== -->
+  <!-- DASHBOARD UTAMA ADMIN (6 MENU)                                        -->
+  <!-- ===================================================================== -->
   <div id="admin-dashboard" class="hidden min-h-screen flex-col lg:flex-row no-print">
     <!-- Sidebar -->
     <aside class="w-full lg:w-64 bg-slate-900 text-slate-200 flex flex-col shrink-0">
       <div class="p-5 border-b border-slate-800">
-        <div class="font-extrabold text-white text-base tracking-wide">CBT TKA ADMIN</div>
+        <div class="font-extrabold text-white text-base tracking-wide">CBT SEKOLAH ADMIN</div>
         <div id="sidebar-school-name" class="text-xs text-slate-400 truncate mt-0.5">Memuat sekolah...</div>
       </div>
 
@@ -60,16 +64,16 @@
           1. Ruang Pengawas
         </button>
         <button type="button" onclick="switchTab('paket')" id="nav-paket" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
-          2. Paket & Token
+          2. Mapel &amp; Jadwal Ujian
         </button>
         <button type="button" onclick="switchTab('soal')" id="nav-soal" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
-          3. Bank Soal & Stimulus
+          3. Bank Soal &amp; Impor/Ekspor
         </button>
         <button type="button" onclick="switchTab('peserta')" id="nav-peserta" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
-          4. Data Peserta & Kartu
+          4. Data Peserta &amp; Kartu
         </button>
         <button type="button" onclick="switchTab('nilai')" id="nav-nilai" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
-          5. Rekap Nilai & Uraian
+          5. Rekap Nilai &amp; Uraian
         </button>
         <button type="button" onclick="switchTab('sekolah')" id="nav-sekolah" class="nav-btn text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-slate-800 whitespace-nowrap">
           6. Identitas Sekolah
@@ -86,12 +90,14 @@
     <!-- Konten Utama -->
     <main class="flex-1 p-4 md:p-6 overflow-y-auto">
 
-      <!-- MENU 1: RUANG PENGAWAS & PANTAUAN LANGSUNG -->
+      <!-- ================================================================= -->
+      <!-- MENU 1: RUANG PENGAWAS & PANTAUAN LANGSUNG                        -->
+      <!-- ================================================================= -->
       <section id="tab-pengawas" class="tab-section space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-extrabold text-slate-900">Ruang Pengawas & Pantauan Langsung</h2>
-            <p class="text-xs text-slate-500">Pantau progres siswa, buka kunci pelanggaran, dan lihat catatan kecurangan waktu nyata.</p>
+            <h2 class="text-xl font-extrabold text-slate-900">Ruang Pengawas &amp; Pantauan Langsung</h2>
+            <p class="text-xs text-slate-500">Pantau progres siswa per mata pelajaran, buka kunci pelanggaran, dan lihat catatan kecurangan.</p>
           </div>
           <div class="flex items-center gap-2">
             <select id="filter-paket-pengawas" onchange="loadPengawasData()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm font-semibold"></select>
@@ -119,7 +125,7 @@
         </div>
 
         <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-          <div class="px-5 py-3 bg-slate-50 border-b font-bold text-sm text-slate-700">Daftar Peserta Aktif pada Paket Terpilih</div>
+          <div class="px-5 py-3 bg-slate-50 border-b font-bold text-sm text-slate-700">Daftar Peserta Aktif pada Mata Pelajaran Terpilih</div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-sm">
               <thead class="bg-slate-50 text-xs uppercase text-slate-500 border-b">
@@ -142,81 +148,173 @@
         </div>
       </section>
 
-      <!-- MENU 2: PAKET & TOKEN UJIAN -->
+      <!-- ================================================================= -->
+      <!-- MENU 2: MATA PELAJARAN, KATEGORI UJIAN & BATAS WAKTU              -->
+      <!-- ================================================================= -->
       <section id="tab-paket" class="tab-section hidden space-y-5">
-        <h2 class="text-xl font-extrabold text-slate-900">Paket & Token Ujian</h2>
+        <h2 class="text-xl font-extrabold text-slate-900">Mata Pelajaran, Kategori Ujian &amp; Jadwal Batas Waktu</h2>
 
         <form id="form-paket" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-4">
           <input type="hidden" id="paket-id" />
+
           <div>
-            <label class="block text-xs font-bold text-slate-600 mb-1">Judul Ujian</label>
-            <input type="text" id="paket-judul" required placeholder="Contoh: TKA Gelombang 1" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+            <label class="block text-xs font-bold text-slate-600 mb-1">Kategori / Jenis Ujian</label>
+            <input type="text" id="paket-jenis" list="list-jenis-ujian" required placeholder="Pilih atau ketik jenis ujian..."
+              class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-semibold bg-blue-50/40" />
+            <datalist id="list-jenis-ujian">
+              <option value="Asesmen Sumatif Akhir Semester (ASAS)"></option>
+              <option value="Asesmen Sumatif Tengah Semester (ASTS)"></option>
+              <option value="Asesmen Sumatif Lingkup Materi"></option>
+              <option value="Ulangan Harian"></option>
+              <option value="Try Out TKA"></option>
+              <option value="Remedial / Susulan"></option>
+            </datalist>
           </div>
+
           <div>
             <label class="block text-xs font-bold text-slate-600 mb-1">Mata Pelajaran</label>
-            <input type="text" id="paket-mapel" required placeholder="Contoh: Literasi Membaca" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+            <input type="text" id="paket-mapel" required placeholder="Contoh: Matematika Wajib" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-bold" />
           </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Judul / Keterangan Paket</label>
+            <input type="text" id="paket-judul" required placeholder="Contoh: Kelas XII - Gelombang 1" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+          </div>
+
           <div>
             <label class="block text-xs font-bold text-slate-600 mb-1">Token Ujian</label>
             <div class="flex gap-1.5">
-              <input type="text" id="paket-token" required placeholder="TKA2026" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-bold uppercase" />
+              <input type="text" id="paket-token" required placeholder="MTK2026" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-mono font-bold uppercase" />
               <button type="button" onclick="generateTokenRandom()" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-xs font-bold">Acak</button>
             </div>
           </div>
+
           <div>
-            <label class="block text-xs font-bold text-slate-600 mb-1">Durasi (Menit)</label>
-            <input type="number" id="paket-durasi" required value="60" min="5" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+            <label class="block text-xs font-bold text-slate-600 mb-1">Durasi Pengerjaan (Menit)</label>
+            <input type="number" id="paket-durasi" required value="60" min="5" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-semibold" />
           </div>
+
           <div>
             <label class="block text-xs font-bold text-slate-600 mb-1">Batas Toleransi Pelanggaran</label>
             <input type="number" id="paket-batas" required value="3" min="1" max="10" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
           </div>
-          <div class="flex flex-col justify-center space-y-1.5 pt-2">
+
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Jadwal Mulai Dibuka (Opsional)</label>
+            <input type="datetime-local" id="paket-waktu-buka" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+            <span class="text-[11px] text-slate-400">Kosongkan jika langsung dibuka sekarang.</span>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-red-700 mb-1">Batas Terakhir Mengerjakan / Deadline (Opsional)</label>
+            <input type="datetime-local" id="paket-deadline" class="w-full px-3 py-2 rounded-xl border border-red-200 bg-red-50/30 text-sm" />
+            <span class="text-[11px] text-slate-400">Ujian tertutup otomatis setelah melewati jam ini.</span>
+          </div>
+
+          <div class="flex flex-col justify-center space-y-1.5 pt-1">
             <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer">
               <input type="checkbox" id="paket-acak-soal" checked class="accent-blue-600" /> Acak Urutan Nomor Soal
             </label>
             <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer">
-              <input type="checkbox" id="paket-acak-opsi" checked class="accent-blue-600" /> Acak Posisi Pilihan Jawaban
+              <input type="checkbox" id="paket-acak-opsi" checked class="accent-blue-600" /> Acak Isi Pilihan (Huruf A–E Tetap Urut)
             </label>
             <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer">
-              <input type="checkbox" id="paket-aktif" checked class="accent-emerald-600" /> Paket Aktif (Bisa Diakses Siswa)
+              <input type="checkbox" id="paket-aktif" checked class="accent-emerald-600" /> Paket Aktif (Ditampilkan ke Siswa)
             </label>
           </div>
-          <div class="md:col-span-3 flex gap-2">
-            <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm">Simpan Paket Ujian</button>
-            <button type="button" onclick="resetFormPaket()" class="px-4 py-2.5 rounded-xl bg-slate-200 text-slate-700 font-semibold text-sm">Batal / Baru</button>
+
+          <div class="md:col-span-3 flex gap-2 pt-2 border-t">
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm">Simpan Jadwal &amp; Paket Ujian</button>
+            <button type="button" onclick="resetFormPaket()" class="px-4 py-2.5 rounded-xl bg-slate-200 text-slate-700 font-semibold text-sm">Batal / Buat Baru</button>
           </div>
         </form>
 
         <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-slate-50 text-xs uppercase text-slate-500 border-b">
-              <tr>
-                <th class="p-3">Judul & Mapel</th>
-                <th class="p-3">Token</th>
-                <th class="p-3">Durasi & Batas</th>
-                <th class="p-3">Status</th>
-                <th class="p-3 text-right">Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-paket" class="divide-y divide-slate-100"></tbody>
-          </table>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 text-xs uppercase text-slate-500 border-b">
+                <tr>
+                  <th class="p-3">Jenis Ujian &amp; Mapel</th>
+                  <th class="p-3">Token</th>
+                  <th class="p-3">Durasi &amp; Batas Akhir (Deadline)</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3 text-right">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-paket" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
         </div>
       </section>
 
-      <!-- MENU 3: BANK SOAL TKA & STIMULUS -->
+      <!-- ================================================================= -->
+      <!-- MENU 3: BANK SOAL, STIMULUS & IMPOR / EKSPOR SOAL                 -->
+      <!-- ================================================================= -->
       <section id="tab-soal" class="tab-section hidden space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
-          <h2 class="text-xl font-extrabold text-slate-900">Bank Soal TKA & Stimulus</h2>
-          <select id="filter-paket-soal" onchange="loadStimulusDanSoal()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm font-semibold"></select>
+          <div>
+            <h2 class="text-xl font-extrabold text-slate-900">Bank Soal, Stimulus &amp; Impor/Ekspor</h2>
+            <p class="text-xs text-slate-500">Pilih mata pelajaran terlebih dahulu sebelum mengelola atau mengimpor soal.</p>
+          </div>
+          <select id="filter-paket-soal" onchange="loadStimulusDanSoal()" class="px-3.5 py-2.5 rounded-xl border-2 border-blue-600 bg-white text-sm font-bold text-slate-900"></select>
         </div>
 
+        <!-- PANEL IMPOR & EKSPOR BANK SOAL (CSV / EXCEL) -->
+        <div class="bg-white p-5 rounded-2xl border border-indigo-200 shadow-sm space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h3 class="font-extrabold text-sm text-indigo-900">Impor &amp; Ekspor Bank Soal Massal (Format Excel / CSV)</h3>
+              <p class="text-xs text-slate-500">Gunakan template CSV untuk mengunggah puluhan soal sekaligus (mendukung PG, PGK, Benar/Salah, Menjodohkan, Isian, dan Uraian).</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" onclick="unduhTemplateSoalCSV()" class="px-3.5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold">
+                1. Unduh Template CSV Soal
+              </button>
+              <label class="px-3.5 py-2 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white text-xs font-bold cursor-pointer">
+                2. Pilih File CSV untuk Diimpor
+                <input type="file" accept=".csv,.txt" onchange="bacaFileCSVSoal(this)" class="hidden" />
+              </label>
+              <button type="button" onclick="eksporBankSoalCSV()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">
+                Ekspor Bank Soal (.CSV)
+              </button>
+            </div>
+          </div>
+
+          <!-- Pratinjau Impor Soal sebelum Simpan -->
+          <div id="preview-impor-box" class="hidden border-t pt-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-indigo-800">Pratinjau Soal Terbaca (<span id="jumlah-preview-soal">0</span> butir siap diimpor):</span>
+              <div class="flex gap-2">
+                <button type="button" onclick="batalImporSoal()" class="px-3 py-1.5 rounded-lg bg-slate-200 text-xs font-bold">Batal</button>
+                <button type="button" onclick="eksekusiSimpanImporSoal()" class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow">
+                  Simpan Semua ke Bank Soal
+                </button>
+              </div>
+            </div>
+            <div class="max-h-60 overflow-y-auto border rounded-xl">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-100 font-bold text-slate-600 border-b">
+                  <tr>
+                    <th class="p-2">No</th>
+                    <th class="p-2">Tipe</th>
+                    <th class="p-2">Pertanyaan</th>
+                    <th class="p-2">Kunci Jawaban</th>
+                    <th class="p-2">Bobot</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-preview-impor" class="divide-y"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL A: STIMULUS WACANA / GRAFIK -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
           <h3 class="font-bold text-sm text-blue-900 border-b pb-2">A. Tambah Stimulus Wacana / Grafik (Opsional untuk Soal Grup)</h3>
           <form id="form-stimulus" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-bold text-slate-600 mb-1">Judul Stimulus</label>
-              <input type="text" id="stim-judul" required placeholder="Contoh: Wacana 1 - Transisi Energi" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
+              <input type="text" id="stim-judul" required placeholder="Contoh: Wacana 1 - Ekosistem Hutan" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm" />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-600 mb-1">Unggah Gambar / Grafik Stimulus (Otomatis)</label>
@@ -234,14 +332,15 @@
           </form>
         </div>
 
+        <!-- PANEL B: TAMBAH BUTIR SOAL MANUAL (7 TIPE) -->
         <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-          <h3 class="font-bold text-sm text-blue-900 border-b pb-2">B. Tambah Butir Soal Baru (Semua Tipe TKA)</h3>
+          <h3 class="font-bold text-sm text-blue-900 border-b pb-2">B. Tambah Butir Soal Manual (Semua Tipe Soal)</h3>
           <form id="form-soal" class="space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
               <div>
-                <label class="block text-xs font-bold text-slate-600 mb-1">Tipe Soal TKA</label>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Tipe Soal</label>
                 <select id="soal-tipe" onchange="renderEditorTipeSoal()" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-sm font-semibold bg-blue-50">
-                  <option value="pg">1. Pilihan Ganda (A-E)</option>
+                  <option value="pg">1. Pilihan Ganda (A–E)</option>
                   <option value="pgk_mcma">2. PG Kompleks (Multi-Jawaban)</option>
                   <option value="pgk_kategori_bs">3. PGK Matriks (Benar / Salah)</option>
                   <option value="pgk_kategori_sesuai">4. PGK Matriks (Sesuai / Tidak Sesuai)</option>
@@ -292,16 +391,22 @@
           </form>
         </div>
 
+        <!-- DAFTAR SOAL PADA MATA PELAJARAN INI -->
         <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-          <div class="px-5 py-3 bg-slate-50 border-b font-bold text-sm">Daftar Soal pada Paket Ini (<span id="count-soal-paket">0</span> soal)</div>
+          <div class="px-5 py-3 bg-slate-50 border-b font-bold text-sm flex items-center justify-between">
+            <span>Daftar Soal pada Mata Pelajaran Ini (<span id="count-soal-paket">0</span> soal)</span>
+            <button type="button" onclick="hapusSemuaSoalPaket()" class="text-xs text-red-600 hover:underline font-bold">Kosongkan Semua Soal Paket Ini</button>
+          </div>
           <div id="list-bank-soal" class="divide-y divide-slate-100"></div>
         </div>
       </section>
 
-      <!-- MENU 4: DATA PESERTA & CETAK KARTU -->
+      <!-- ================================================================= -->
+      <!-- MENU 4: DATA PESERTA & CETAK KARTU                                -->
+      <!-- ================================================================= -->
       <section id="tab-peserta" class="tab-section hidden space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
-          <h2 class="text-xl font-extrabold text-slate-900">Data Peserta & Cetak Kartu Ujian</h2>
+          <h2 class="text-xl font-extrabold text-slate-900">Data Peserta &amp; Cetak Kartu Ujian</h2>
           <div class="flex flex-wrap gap-2">
             <button type="button" onclick="unduhTemplatePeserta()" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-xs font-bold">Unduh Template CSV</button>
             <label class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold cursor-pointer">
@@ -337,10 +442,12 @@
         </div>
       </section>
 
-      <!-- MENU 5: REKAP NILAI & KOREKSI URAIAN -->
+      <!-- ================================================================= -->
+      <!-- MENU 5: REKAP NILAI & KOREKSI URAIAN                              -->
+      <!-- ================================================================= -->
       <section id="tab-nilai" class="tab-section hidden space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
-          <h2 class="text-xl font-extrabold text-slate-900">Rekap Nilai & Koreksi Uraian</h2>
+          <h2 class="text-xl font-extrabold text-slate-900">Rekap Nilai &amp; Koreksi Uraian</h2>
           <div class="flex gap-2">
             <select id="filter-paket-nilai" onchange="loadRekapNilai()" class="px-3 py-2 rounded-xl border border-slate-300 bg-white text-sm font-semibold"></select>
             <button type="button" onclick="eksporRekapCSV()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold">Unduh Rekap Excel (CSV)</button>
@@ -352,7 +459,7 @@
             <thead class="bg-slate-50 text-xs uppercase text-slate-500 border-b">
               <tr>
                 <th class="p-3">No. Peserta</th>
-                <th class="p-3">Nama & Kelas</th>
+                <th class="p-3">Nama &amp; Kelas</th>
                 <th class="p-3">Status</th>
                 <th class="p-3">Pelanggaran</th>
                 <th class="p-3">Nilai Akhir</th>
@@ -364,9 +471,11 @@
         </div>
       </section>
 
-      <!-- MENU 6: IDENTITAS SEKOLAH & KOP DOKUMEN -->
+      <!-- ================================================================= -->
+      <!-- MENU 6: IDENTITAS SEKOLAH & KOP DOKUMEN                           -->
+      <!-- ================================================================= -->
       <section id="tab-sekolah" class="tab-section hidden space-y-5">
-        <h2 class="text-xl font-extrabold text-slate-900">Identitas Sekolah & Kop Dokumen</h2>
+        <h2 class="text-xl font-extrabold text-slate-900">Identitas Sekolah &amp; Kop Dokumen</h2>
         <form id="form-sekolah" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-bold text-slate-600 mb-1">Nama Satuan Pendidikan / Sekolah</label>
@@ -454,7 +563,7 @@
     try {
       if (typeof window.supabase === 'undefined') {
         tampilkanPesanLogin('Pustaka Supabase gagal dimuat. Periksa koneksi internet Anda lalu muat ulang halaman.');
-      } else if (typeof SUPABASE_CONFIG === 'undefined' || !SUPABASE_CONFIG.URL || !SUPABASE_CONFIG.URL.startsWith('https://') || SUPABASE_CONFIG.URL.includes('GANTI_DENGAN')) {
+      } else if (typeof SUPABASE_CONFIG === 'undefined' || !SUPABASE_CONFIG.URL || !SUPABASE_CONFIG.URL.startsWith('https://')) {
         tampilkanPesanLogin('File config.js belum terbaca atau URL Supabase belum diisi dengan benar.');
       } else {
         sb = window.supabase.createClient(SUPABASE_CONFIG.URL, SUPABASE_CONFIG.PUBLISHABLE_KEY);
@@ -465,6 +574,8 @@
 
     let cacheSekolah = {};
     let cachePaket = [];
+    let cacheSoalPaketIni = [];
+    let parsedImportSoal = [];
     let cachePeserta = [];
     let cacheRekap = [];
 
@@ -486,10 +597,7 @@
 
     async function prosesLoginAdmin(e) {
       if (e) e.preventDefault();
-      if (!sb) {
-        tampilkanPesanLogin('Koneksi Supabase belum siap. Pastikan file config.js berada satu folder dengan admin.html.');
-        return false;
-      }
+      if (!sb) return false;
       const email = document.getElementById('admin-email').value.trim();
       const password = document.getElementById('admin-password').value;
       const errEl = document.getElementById('admin-login-err');
@@ -562,6 +670,9 @@
       }
     }
 
+    // =========================================================================
+    // MENU 6: IDENTITAS SEKOLAH
+    // =========================================================================
     async function loadIdentitasSekolah() {
       const { data } = await sb.from('identitas_sekolah').select('*').eq('id', 1).single();
       if (!data) return;
@@ -611,6 +722,9 @@
       }
     });
 
+    // =========================================================================
+    // MENU 2: MATA PELAJARAN, KATEGORI UJIAN & BATAS WAKTU
+    // =========================================================================
     function generateTokenRandom() {
       const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
       let res = '';
@@ -623,30 +737,52 @@
       document.getElementById('paket-id').value = '';
     }
 
+    function toLocalDatetimeInput(isoStr) {
+      if (!isoStr) return '';
+      const d = new Date(isoStr);
+      const offset = d.getTimezoneOffset();
+      const local = new Date(d.getTime() - offset * 60000);
+      return local.toISOString().slice(0, 16);
+    }
+
+    function formatTanggalSingkat(isoStr) {
+      if (!isoStr) return '-';
+      return new Date(isoStr).toLocaleString('id-ID', {
+        day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+    }
+
     async function loadPaketUjian() {
       const { data } = await sb.from('paket_ujian').select('*').order('created_at', { ascending: false });
       cachePaket = data || [];
 
-      const opts = cachePaket.map(p => `<option value="${p.id}">${p.judul_ujian} (${p.token_ujian})</option>`).join('');
+      const opts = cachePaket.map(p =>
+        `<option value="${p.id}">[${p.jenis_ujian || 'Ujian'}] ${p.mata_pelajaran} — ${p.judul_ujian} (${p.token_ujian})</option>`
+      ).join('');
       ['filter-paket-pengawas', 'filter-paket-soal', 'filter-paket-nilai'].forEach(id => {
-        document.getElementById(id).innerHTML = opts || '<option value="">Belum ada paket</option>';
+        document.getElementById(id).innerHTML = opts || '<option value="">Belum ada mata pelajaran</option>';
       });
 
       document.getElementById('tbody-paket').innerHTML = cachePaket.map(p => `
         <tr>
           <td class="p-3">
-            <div class="font-bold text-slate-900">${p.judul_ujian}</div>
-            <div class="text-xs text-slate-500">${p.mata_pelajaran}</div>
+            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 text-[11px] font-bold">${p.jenis_ujian || 'Asesmen Sumatif'}</span>
+            <div class="font-extrabold text-slate-900 mt-0.5">${p.mata_pelajaran}</div>
+            <div class="text-xs text-slate-500">${p.judul_ujian}</div>
           </td>
           <td class="p-3"><span class="px-2.5 py-1 rounded bg-blue-100 text-blue-800 font-mono font-bold">${p.token_ujian}</span></td>
-          <td class="p-3 text-xs">${p.durasi_menit} menit &bull; Maks ${p.batas_pelanggaran}x pelanggaran</td>
+          <td class="p-3 text-xs space-y-0.5">
+            <div>Durasi: <strong>${p.durasi_menit} menit</strong></div>
+            <div class="text-slate-500">Buka: ${formatTanggalSingkat(p.waktu_buka)}</div>
+            <div class="text-red-700 font-semibold">Deadline: ${formatTanggalSingkat(p.batas_akhir_pengerjaan)}</div>
+          </td>
           <td class="p-3">
             <span class="px-2 py-0.5 rounded-full text-xs font-bold ${p.status_aktif ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-600'}">
               ${p.status_aktif ? 'Aktif' : 'Ditutup'}
             </span>
           </td>
           <td class="p-3 text-right space-x-2">
-            <button type="button" onclick='editPaket(${JSON.stringify(p)})' class="text-blue-600 font-semibold text-xs hover:underline">Edit</button>
+            <button type="button" onclick='editPaket(${JSON.stringify(p).replace(/'/g, "&#39;")})' class="text-blue-600 font-semibold text-xs hover:underline">Edit</button>
             <button type="button" onclick="hapusPaket('${p.id}')" class="text-red-600 font-semibold text-xs hover:underline">Hapus</button>
           </td>
         </tr>
@@ -657,11 +793,14 @@
 
     function editPaket(p) {
       document.getElementById('paket-id').value = p.id;
-      document.getElementById('paket-judul').value = p.judul_ujian;
+      document.getElementById('paket-jenis').value = p.jenis_ujian || 'Asesmen Sumatif';
       document.getElementById('paket-mapel').value = p.mata_pelajaran;
+      document.getElementById('paket-judul').value = p.judul_ujian;
       document.getElementById('paket-token').value = p.token_ujian;
       document.getElementById('paket-durasi').value = p.durasi_menit;
       document.getElementById('paket-batas').value = p.batas_pelanggaran;
+      document.getElementById('paket-waktu-buka').value = toLocalDatetimeInput(p.waktu_buka);
+      document.getElementById('paket-deadline').value = toLocalDatetimeInput(p.batas_akhir_pengerjaan);
       document.getElementById('paket-acak-soal').checked = p.acak_soal;
       document.getElementById('paket-acak-opsi').checked = p.acak_opsi;
       document.getElementById('paket-aktif').checked = p.status_aktif;
@@ -670,12 +809,18 @@
     document.getElementById('form-paket').addEventListener('submit', async (e) => {
       e.preventDefault();
       const id = document.getElementById('paket-id').value;
+      const bukaRaw = document.getElementById('paket-waktu-buka').value;
+      const deadlineRaw = document.getElementById('paket-deadline').value;
+
       const payload = {
-        judul_ujian: document.getElementById('paket-judul').value,
-        mata_pelajaran: document.getElementById('paket-mapel').value,
+        jenis_ujian: document.getElementById('paket-jenis').value.trim(),
+        mata_pelajaran: document.getElementById('paket-mapel').value.trim(),
+        judul_ujian: document.getElementById('paket-judul').value.trim(),
         token_ujian: document.getElementById('paket-token').value.trim().toUpperCase(),
         durasi_menit: parseInt(document.getElementById('paket-durasi').value, 10),
         batas_pelanggaran: parseInt(document.getElementById('paket-batas').value, 10),
+        waktu_buka: bukaRaw ? new Date(bukaRaw).toISOString() : null,
+        batas_akhir_pengerjaan: deadlineRaw ? new Date(deadlineRaw).toISOString() : null,
         acak_soal: document.getElementById('paket-acak-soal').checked,
         acak_opsi: document.getElementById('paket-acak-opsi').checked,
         status_aktif: document.getElementById('paket-aktif').checked
@@ -693,11 +838,14 @@
     });
 
     async function hapusPaket(id) {
-      if (!confirm('Hapus paket ujian ini beserta seluruh soal dan nilai di dalamnya?')) return;
+      if (!confirm('Hapus mata pelajaran / paket ujian ini beserta seluruh soal dan nilai di dalamnya?')) return;
       await sb.from('paket_ujian').delete().eq('id', id);
       loadPaketUjian();
     }
 
+    // =========================================================================
+    // MENU 1: RUANG PENGAWAS
+    // =========================================================================
     async function loadPengawasData() {
       const paketId = document.getElementById('filter-paket-pengawas').value;
       if (!paketId) return;
@@ -736,7 +884,7 @@
             </td>
           </tr>
         `;
-      }).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">Belum ada peserta masuk pada paket ini.</td></tr>';
+      }).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">Belum ada peserta masuk pada mata pelajaran ini.</td></tr>';
 
       const { data: logs } = await sb
         .from('log_kecurangan')
@@ -767,6 +915,9 @@
       loadPengawasData();
     }
 
+    // =========================================================================
+    // MENU 3: BANK SOAL, STIMULUS & IMPOR / EKSPOR CSV
+    // =========================================================================
     function renderEditorTipeSoal() {
       const tipe = document.getElementById('soal-tipe').value;
       const box = document.getElementById('dynamic-soal-fields');
@@ -797,7 +948,7 @@
         const colA = tipe === 'pgk_kategori_bs' ? 'Benar' : 'Sesuai';
         const colB = tipe === 'pgk_kategori_bs' ? 'Salah' : 'Tidak Sesuai';
         box.innerHTML = `
-          <div class="text-xs font-bold text-slate-700 mb-2">Daftar Pernyataan & Kunci (${colA} / ${colB})</div>
+          <div class="text-xs font-bold text-slate-700 mb-2">Daftar Pernyataan &amp; Kunci (${colA} / ${colB})</div>
           ${[0, 1, 2, 3].map(i => `
             <div class="flex flex-wrap md:flex-nowrap items-center gap-2 bg-white p-2.5 rounded-lg border">
               <input type="text" id="mat-teks-${i}" placeholder="Pernyataan ke-${i + 1} (kosongkan jika tidak dipakai)" class="flex-1 px-3 py-1.5 rounded border text-sm" />
@@ -810,7 +961,7 @@
         `;
       } else if (tipe === 'menjodohkan') {
         box.innerHTML = `
-          <div class="text-xs font-bold text-slate-700 mb-2">Pasangan Kolom Kiri dan Kolom Kanan (Isi berpasangan secara lurus, sistem akan mengacak otomatis di layar siswa)</div>
+          <div class="text-xs font-bold text-slate-700 mb-2">Pasangan Kolom Kiri dan Kolom Kanan (Isi berpasangan lurus, sistem mengacak kolom kanan otomatis)</div>
           ${[1, 2, 3, 4].map(i => `
             <div class="grid grid-cols-1 md:grid-cols-2 gap-2 bg-white p-2.5 rounded-lg border">
               <input type="text" id="jodoh-kiri-${i}" placeholder="Premis Kiri ${i}" class="px-3 py-1.5 rounded border text-sm" />
@@ -821,23 +972,241 @@
       } else if (tipe === 'isian_singkat') {
         box.innerHTML = `
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Kunci Jawaban Sah (Pisahkan dengan tanda koma jika ada variasi penulisan, misal: 75, 75%, tujuh puluh lima)</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Kunci Jawaban Sah (Pisahkan dengan koma jika ada variasi penulisan, misal: 75, 75%)</label>
             <input type="text" id="kunci-isian" required placeholder="Contoh: 1775, 1.775" class="w-full px-3 py-2 rounded-lg border bg-white text-sm font-semibold" />
           </div>
         `;
       } else if (tipe === 'uraian') {
         box.innerHTML = `
           <div class="text-xs text-amber-800 bg-amber-50 p-3 rounded-lg border border-amber-200">
-            Soal tipe <strong>Uraian</strong> akan dikoreksi secara manual oleh guru melalui menu <strong>5. Rekap Nilai & Uraian</strong>. Tuliskan pedoman penskoran pada kolom Pembahasan di bawah.
+            Soal tipe <strong>Uraian</strong> dikoreksi manual oleh guru pada menu <strong>5. Rekap Nilai &amp; Uraian</strong>.
           </div>
         `;
       }
     }
 
+    // --- Template, Impor & Ekspor CSV Bank Soal ---
+    function unduhTemplateSoalCSV() {
+      const baris = [
+        'nomor_urut;tipe_soal;pertanyaan;opsi_a;opsi_b;opsi_c;opsi_d;opsi_e;kunci_jawaban;bobot_skor;pembahasan',
+        '1;pg;Ibu kota provinsi Jawa Barat adalah...;Jakarta;Bandung;Surabaya;Semarang;Medan;B;1;Bandung adalah ibu kota Jawa Barat',
+        '2;pgk_mcma;Manakah yang termasuk bilangan prima?;2;4;5;9;11;A,C,E;2;Bilangan prima: 2, 5, dan 11',
+        '3;pgk_kategori_bs;Tentukan Benar atau Salah pernyataan berikut!;Air mendidih pada 100 derajat Celcius;Matahari terbit dari barat;Indonesia merdeka tahun 1945;;;Benar,Salah,Benar;2;Evaluasi pernyataan dasar',
+        '4;menjodohkan;Pasangkan provinsi dengan ibu kotanya!;Jawa Timur :: Surabaya;Jawa Tengah :: Semarang;Bali :: Denpasar;;;OTOMATIS;2;Pasangan wilayah',
+        '5;isian_singkat;Hasil dari 15 x 4 adalah...;;;;;;60, enam puluh;1;Perkalian dasar',
+        '6;uraian;Jelaskan proses terjadinya fotosintesis pada tumbuhan hijau!;;;;;;;5;Rubrik: cahaya matahari, klorofil, CO2, H2O -> glukosa + O2'
+      ];
+      downloadFile('\uFEFF' + baris.join('\n'), 'template_bank_soal_cbt.csv', 'text/csv;charset=utf-8');
+    }
+
+    function parseBarisCSV(line, delimiter) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          if (inQuotes && line[i + 1] === '"') {
+            current += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === delimiter && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += ch;
+        }
+      }
+      result.push(current.trim());
+      return result;
+    }
+
+    function bacaFileCSVSoal(inputEl) {
+      const file = inputEl.files[0];
+      if (!file) return;
+      const paketId = document.getElementById('filter-paket-soal').value;
+      if (!paketId) {
+        alert('Pilih mata pelajaran / paket ujian terlebih dahulu!');
+        inputEl.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target.result.replace(/^\uFEFF/, '');
+        const lines = text.split(/\r?\n/).filter(l => l.trim().length > 0);
+        if (lines.length < 2) {
+          alert('File CSV kosong atau tidak memiliki baris data soal.');
+          return;
+        }
+
+        const delimiter = lines[0].includes(';') ? ';' : ',';
+        parsedImportSoal = [];
+
+        for (let i = 1; i < lines.length; i++) {
+          const cols = parseBarisCSV(lines[i], delimiter);
+          if (cols.length < 3 || !cols[2]) continue;
+
+          const nomor = parseInt(cols[0], 10) || i;
+          const tipe = (cols[1] || 'pg').toLowerCase().trim();
+          const pertanyaan = cols[2];
+          const rawOps = [cols[3] || '', cols[4] || '', cols[5] || '', cols[6] || '', cols[7] || ''];
+          const kunciRaw = cols[8] || '';
+          const bobot = parseFloat(cols[9]) || 1;
+          const pembahasan = cols[10] || null;
+
+          let struktur = {};
+          let kunci = {};
+
+          if (tipe === 'pg' || tipe === 'pgk_mcma') {
+            const huruf = ['A', 'B', 'C', 'D', 'E'];
+            const opsi = [];
+            rawOps.forEach((teks, idx) => {
+              if (teks) opsi.push({ kode: huruf[idx], teks, gambar: '' });
+            });
+            struktur = { opsi };
+            if (tipe === 'pg') {
+              kunci = { jawaban: kunciRaw.toUpperCase().trim() };
+            } else {
+              kunci = { jawaban: kunciRaw.split(',').map(s => s.toUpperCase().trim()).filter(Boolean) };
+            }
+          } else if (tipe === 'pgk_kategori_bs' || tipe === 'pgk_kategori_sesuai') {
+            const pernyataan = rawOps.filter(Boolean);
+            const jawaban = kunciRaw.split(',').map(s => s.trim()).filter(Boolean);
+            struktur = { pernyataan };
+            kunci = { jawaban };
+          } else if (tipe === 'menjodohkan') {
+            const kiri = [];
+            const kanan = [];
+            const pasangan = {};
+            rawOps.filter(Boolean).forEach((pairStr, idx) => {
+              const parts = pairStr.split('::');
+              if (parts.length >= 2) {
+                const lId = `L${idx + 1}`;
+                const rId = `R${idx + 1}`;
+                kiri.push({ id: lId, teks: parts[0].trim() });
+                kanan.push({ id: rId, teks: parts[1].trim() });
+                pasangan[lId] = rId;
+              }
+            });
+            kanan.sort(() => Math.random() - 0.5);
+            struktur = { kiri, kanan };
+            kunci = { pasangan };
+          } else if (tipe === 'isian_singkat') {
+            kunci = { jawaban: kunciRaw.split(',').map(s => s.trim()).filter(Boolean) };
+          }
+
+          parsedImportSoal.push({
+            paket_id: paketId,
+            nomor_urut: nomor,
+            tipe_soal: tipe,
+            pertanyaan,
+            opsi_dan_struktur: struktur,
+            kunci_jawaban: kunci,
+            bobot_skor: bobot,
+            pembahasan,
+            _kunciPreview: kunciRaw || '-'
+          });
+        }
+
+        if (parsedImportSoal.length === 0) {
+          alert('Tidak ada soal valid yang dapat dibaca dari file CSV.');
+          return;
+        }
+
+        document.getElementById('jumlah-preview-soal').textContent = parsedImportSoal.length;
+        document.getElementById('tbody-preview-impor').innerHTML = parsedImportSoal.map(s => `
+          <tr>
+            <td class="p-2 font-bold">${s.nomor_urut}</td>
+            <td class="p-2"><span class="px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold">${s.tipe_soal}</span></td>
+            <td class="p-2">${s.pertanyaan}</td>
+            <td class="p-2 font-mono font-bold text-emerald-700">${s._kunciPreview}</td>
+            <td class="p-2">${s.bobot_skor}</td>
+          </tr>
+        `).join('');
+        document.getElementById('preview-impor-box').classList.remove('hidden');
+        inputEl.value = '';
+      };
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function batalImporSoal() {
+      parsedImportSoal = [];
+      document.getElementById('preview-impor-box').classList.add('hidden');
+    }
+
+    async function eksekusiSimpanImporSoal() {
+      if (parsedImportSoal.length === 0) return;
+      const payload = parsedImportSoal.map(({ _kunciPreview, ...rest }) => rest);
+      const { error } = await sb.from('bank_soal').insert(payload);
+      if (error) {
+        alert('Gagal mengimpor soal: ' + error.message);
+      } else {
+        alert(`Berhasil mengimpor ${payload.length} soal ke database!`);
+        batalImporSoal();
+        loadStimulusDanSoal();
+      }
+    }
+
+    function eksporBankSoalCSV() {
+      if (cacheSoalPaketIni.length === 0) {
+        alert('Belum ada soal pada mata pelajaran ini untuk diekspor.');
+        return;
+      }
+      const paket = cachePaket.find(p => p.id === document.getElementById('filter-paket-soal').value);
+      const namaFile = `bank_soal_${(paket?.mata_pelajaran || 'ujian').replace(/\s+/g, '_').toLowerCase()}.csv`;
+
+      const esc = (val) => `"${String(val ?? '').replace(/"/g, '""')}"`;
+      const header = 'nomor_urut;tipe_soal;pertanyaan;opsi_a;opsi_b;opsi_c;opsi_d;opsi_e;kunci_jawaban;bobot_skor;pembahasan';
+
+      const rows = cacheSoalPaketIni.map(s => {
+        const ops = ['', '', '', '', ''];
+        let kunciStr = '';
+
+        if (s.tipe_soal === 'pg' || s.tipe_soal === 'pgk_mcma') {
+          (s.opsi_dan_struktur?.opsi || []).forEach((o, i) => { if (i < 5) ops[i] = o.teks || ''; });
+          kunciStr = Array.isArray(s.kunci_jawaban?.jawaban)
+            ? s.kunci_jawaban.jawaban.join(',')
+            : (s.kunci_jawaban?.jawaban || '');
+        } else if (s.tipe_soal === 'pgk_kategori_bs' || s.tipe_soal === 'pgk_kategori_sesuai') {
+          (s.opsi_dan_struktur?.pernyataan || []).forEach((t, i) => { if (i < 5) ops[i] = t; });
+          kunciStr = (s.kunci_jawaban?.jawaban || []).join(',');
+        } else if (s.tipe_soal === 'menjodohkan') {
+          const kiri = s.opsi_dan_struktur?.kiri || [];
+          const kanan = s.opsi_dan_struktur?.kanan || [];
+          const pas = s.kunci_jawaban?.pasangan || {};
+          kiri.forEach((k, i) => {
+            if (i < 5) {
+              const rObj = kanan.find(r => r.id === pas[k.id]);
+              ops[i] = `${k.teks} :: ${rObj?.teks || ''}`;
+            }
+          });
+          kunciStr = 'OTOMATIS';
+        } else if (s.tipe_soal === 'isian_singkat') {
+          kunciStr = (s.kunci_jawaban?.jawaban || []).join(', ');
+        }
+
+        return [
+          s.nomor_urut,
+          s.tipe_soal,
+          esc(s.pertanyaan),
+          esc(ops[0]), esc(ops[1]), esc(ops[2]), esc(ops[3]), esc(ops[4]),
+          esc(kunciStr),
+          s.bobot_skor,
+          esc(s.pembahasan || '')
+        ].join(';');
+      });
+
+      downloadFile('\uFEFF' + [header, ...rows].join('\n'), namaFile, 'text/csv;charset=utf-8');
+    }
+
+    // --- Simpan Stimulus & Soal Manual ---
     document.getElementById('form-stimulus').addEventListener('submit', async (e) => {
       e.preventDefault();
       const paketId = document.getElementById('filter-paket-soal').value;
-      if (!paketId) { alert('Buat paket ujian terlebih dahulu!'); return; }
+      if (!paketId) { alert('Buat mata pelajaran / paket ujian terlebih dahulu!'); return; }
 
       const { error } = await sb.from('stimulus').insert({
         paket_id: paketId,
@@ -858,7 +1227,7 @@
     document.getElementById('form-soal').addEventListener('submit', async (e) => {
       e.preventDefault();
       const paketId = document.getElementById('filter-paket-soal').value;
-      if (!paketId) { alert('Pilih paket ujian terlebih dahulu!'); return; }
+      if (!paketId) { alert('Pilih mata pelajaran / paket ujian terlebih dahulu!'); return; }
 
       const tipe = document.getElementById('soal-tipe').value;
       let struktur = {};
@@ -955,9 +1324,11 @@
         .eq('paket_id', paketId)
         .order('nomor_urut', { ascending: true });
 
-      const rows = soalList || [];
-      document.getElementById('count-soal-paket').textContent = rows.length;
-      document.getElementById('list-bank-soal').innerHTML = rows.map(s => `
+      cacheSoalPaketIni = soalList || [];
+      document.getElementById('count-soal-paket').textContent = cacheSoalPaketIni.length;
+      document.getElementById('soal-nomor').value = cacheSoalPaketIni.length + 1;
+
+      document.getElementById('list-bank-soal').innerHTML = cacheSoalPaketIni.map(s => `
         <div class="p-4 flex items-start justify-between gap-4">
           <div class="space-y-1">
             <div class="flex items-center gap-2">
@@ -970,15 +1341,26 @@
           </div>
           <button type="button" onclick="hapusSoal('${s.id}')" class="text-red-600 text-xs font-bold hover:underline shrink-0">Hapus</button>
         </div>
-      `).join('') || '<p class="p-4 text-center text-slate-400 text-sm">Belum ada soal pada paket ini.</p>';
+      `).join('') || '<p class="p-4 text-center text-slate-400 text-sm">Belum ada soal pada mata pelajaran ini.</p>';
     }
 
     async function hapusSoal(id) {
-      if (!confirm('Hapus soal ini?')) return;
+      if (!confirm('Hapus butir soal ini?')) return;
       await sb.from('bank_soal').delete().eq('id', id);
       loadStimulusDanSoal();
     }
 
+    async function hapusSemuaSoalPaket() {
+      const paketId = document.getElementById('filter-paket-soal').value;
+      if (!paketId || cacheSoalPaketIni.length === 0) return;
+      if (!confirm(`Hapus seluruh ${cacheSoalPaketIni.length} soal pada mata pelajaran ini?`)) return;
+      await sb.from('bank_soal').delete().eq('paket_id', paketId);
+      loadStimulusDanSoal();
+    }
+
+    // =========================================================================
+    // MENU 4: DATA PESERTA & CETAK KARTU
+    // =========================================================================
     async function loadPeserta() {
       const { data } = await sb.from('peserta').select('*').order('kelas', { ascending: true }).order('no_peserta', { ascending: true });
       cachePeserta = data || [];
@@ -1029,8 +1411,8 @@
     }
 
     function unduhTemplatePeserta() {
-      const csv = 'no_peserta,nama_lengkap,kelas\n2026010,Ahmad Fauzi,XII IPA 1\n2026011,Dewi Lestari,XII IPS 2\n';
-      downloadFile(csv, 'template_peserta_cbt.csv', 'text/csv');
+      const csv = '\uFEFFno_peserta;nama_lengkap;kelas\n2026010;Ahmad Fauzi;XII IPA 1\n2026011;Dewi Lestari;XII IPS 2\n';
+      downloadFile(csv, 'template_peserta_cbt.csv', 'text/csv;charset=utf-8');
     }
 
     function imporCSVPeserta(inputEl) {
@@ -1038,7 +1420,8 @@
       if (!file) return;
       const reader = new FileReader();
       reader.onload = async (e) => {
-        const lines = e.target.result.split(/\r?\n/).filter(Boolean);
+        const text = e.target.result.replace(/^\uFEFF/, '');
+        const lines = text.split(/\r?\n/).filter(Boolean);
         const rows = [];
         for (let i = 1; i < lines.length; i++) {
           const cols = lines[i].split(/[,;]/);
@@ -1073,7 +1456,7 @@
                 ${cacheSekolah.logo_sekolah_url ? `<img src="${cacheSekolah.logo_sekolah_url}" class="h-10 w-10 object-contain" />` : ''}
                 <div>
                   <div class="font-bold uppercase text-sm">${cacheSekolah.nama_sekolah || 'KARTU PESERTA UJIAN'}</div>
-                  <div class="text-[10px]">Kartu Peserta CBT TKA &bull; TP ${cacheSekolah.tahun_pelajaran || ''}</div>
+                  <div class="text-[10px]">Kartu Peserta CBT &bull; TP ${cacheSekolah.tahun_pelajaran || ''}</div>
                 </div>
               </div>
               <table class="w-full text-xs">
@@ -1093,6 +1476,9 @@
       window.print();
     }
 
+    // =========================================================================
+    // MENU 5: REKAP NILAI & KOREKSI URAIAN
+    // =========================================================================
     async function loadRekapNilai() {
       const paketId = document.getElementById('filter-paket-nilai').value;
       if (!paketId) return;
@@ -1120,7 +1506,7 @@
             </button>
           </td>
         </tr>
-      `).join('') || '<tr><td colspan="6" class="p-4 text-center text-slate-400">Belum ada data nilai pada paket ini.</td></tr>';
+      `).join('') || '<tr><td colspan="6" class="p-4 text-center text-slate-400">Belum ada data nilai pada mata pelajaran ini.</td></tr>';
     }
 
     async function bukaKoreksiUraian(sesiId) {
@@ -1161,9 +1547,9 @@
               </div>
             `;
           }).join('')}
-          <button type="button" onclick="simpanNilaiUraian('${sesi.id}', ${sesi.skor_akhir || 0}, ${totalBobot})"
+          <button type="button" onclick="simpanNilaiUraian('${sesi.id}', ${sesi.skor_otomatis || 0}, ${totalBobot})"
             class="w-full py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-sm">
-            Simpan Tambahan Nilai Uraian
+            Simpan Nilai Akhir
           </button>
         `;
       }
@@ -1171,13 +1557,13 @@
       modal.classList.add('flex');
     }
 
-    async function simpanNilaiUraian(sesiId, skorLama, totalBobot) {
+    async function simpanNilaiUraian(sesiId, skorOtomatis, totalBobot) {
       const inputs = Array.from(document.querySelectorAll('.input-poin-uraian'));
-      const tambahanPoin = inputs.reduce((acc, el) => acc + parseFloat(el.value || 0), 0);
-      const tambahanSkala100 = totalBobot > 0 ? (tambahanPoin / totalBobot) * 100 : 0;
-      const skorBaru = Math.min(100, Math.round((Number(skorLama) + tambahanSkala100) * 100) / 100);
+      const poinUraian = inputs.reduce((acc, el) => acc + parseFloat(el.value || 0), 0);
+      const totalSkor = Number(skorOtomatis) + poinUraian;
+      const nilaiAkhir = totalBobot > 0 ? Math.min(100, Math.round((totalSkor / totalBobot) * 100 * 100) / 100) : 0;
 
-      await sb.from('sesi_ujian').update({ skor_akhir: skorBaru, skor_uraian: tambahanPoin }).eq('id', sesiId);
+      await sb.from('sesi_ujian').update({ skor_uraian: poinUraian, skor_akhir: nilaiAkhir }).eq('id', sesiId);
       tutupModalKoreksi();
       loadRekapNilai();
     }
@@ -1189,11 +1575,11 @@
     }
 
     function eksporRekapCSV() {
-      const header = 'No Peserta,Nama Lengkap,Kelas,Status,Pelanggaran,Nilai Akhir\n';
+      const header = '\uFEFFNo Peserta;Nama Lengkap;Kelas;Status;Pelanggaran;Nilai Akhir\n';
       const rows = cacheRekap.map(r =>
-        `"${r.peserta?.no_peserta || ''}","${r.peserta?.nama_lengkap || ''}","${r.peserta?.kelas || ''}","${r.status_sesi}",${r.jumlah_pelanggaran},${r.skor_akhir ?? 0}`
+        `"${r.peserta?.no_peserta || ''}";"${r.peserta?.nama_lengkap || ''}";"${r.peserta?.kelas || ''}";"${r.status_sesi}";${r.jumlah_pelanggaran};${r.skor_akhir ?? 0}`
       ).join('\n');
-      downloadFile(header + rows, 'rekap_nilai_cbt_tka.csv', 'text/csv');
+      downloadFile(header + rows, 'rekap_nilai_cbt.csv', 'text/csv;charset=utf-8');
     }
 
     function downloadFile(content, filename, mime) {

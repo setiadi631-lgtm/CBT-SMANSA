@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Ruang Ujian Aktif — CBT Online</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- Header Ruang Ujian -->
+  <header class="bg-slate-900 text-white px-4 py-2.5 shadow-md sticky top-0 z-30 border-b-2 border-blue-600">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-3 min-w-0">
+        <img id="hdr-logo-sekolah" alt="Logo Sekolah" class="hidden w-10 h-10 object-contain rounded-lg bg-white p-1 shrink-0" />
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <span id="hdr-jenis-ujian" class="text-[10px] px-1.5 py-0.5 rounded bg-blue-800 text-blue-200 font-bold uppercase">UJIAN</span>
+            <span id="hdr-mapel" class="font-extrabold text-sm truncate">Memuat Mata Pelajaran...</span>
+          </div>
+          <div class="text-xs text-slate-300 truncate">
+            <span id="hdr-nama-peserta" class="font-semibold text-white">-</span> &bull;
+            <span id="hdr-no-peserta" class="font-mono">-</span> (<span id="hdr-kelas">-</span>)
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <div id="badge-pelanggaran" class="px-2.5 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-xs font-bold text-amber-300">
+          Pelanggaran: <span id="val-pelanggaran">0</span>/<span id="val-batas-pelanggaran">3</span>
+        </div>
+        <div id="timer-box" class="px-3 py-1.5 rounded-lg bg-blue-950 border border-blue-700 font-mono font-black text-sm sm:text-base text-emerald-400">
+          00:00:00
+        </div>
+        <button type="button" id="btn-buka-nav-soal"
+          class="px-3 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-600 border border-blue-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow transition">
+          <span>Daftar Soal</span>
+          <span id="badge-progres-soal" class="px-1.5 py-0.5 rounded bg-blue-950 text-blue-200 font-mono text-[11px]">0/0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Konten Utama Ruang Ujian (Stimulus Samping & Soal Utama) -->
+  <main id="workspace-ujian-grid" class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+
+    <!-- Panel Kiri: Stimulus / Wacana -->
+    <section id="stimulus-box"
+      class="hidden lg:col-span-5 bg-amber-50/90 border border-amber-200 rounded-2xl p-4 sm:p-5 shadow-sm space-y-3 lg:sticky lg:top-16 lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto">
+      <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-amber-200/80">
+        <span class="text-xs font-extrabold uppercase tracking-wider text-amber-900 bg-amber-200/80 px-2.5 py-0.5 rounded-md">
+          Stimulus / Wacana Bacaan
+        </span>
+        <span id="stimulus-judul" class="text-xs font-bold text-slate-700"></span>
+      </div>
+      <img id="stimulus-img" alt="Gambar Stimulus" title="Klik untuk memperbesar gambar"
+        class="hidden max-h-72 rounded-xl border border-amber-200 cursor-zoom-in mx-auto bg-white p-1" />
+      <div id="stimulus-teks" class="text-sm sm:text-[15px] leading-relaxed text-slate-800 whitespace-pre-line"></div>
+    </section>
+
+    <!-- Panel Kanan / Penuh: Kartu Butir Soal & Jawaban -->
+    <section id="soal-col-container" class="lg:col-span-12 bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6 space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1 rounded-xl bg-blue-700 text-white font-extrabold text-sm">
+            Soal No. <span id="q-nomor-tampil">1</span>
+          </span>
+          <span id="q-tipe-label" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-bold"></span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="q-status-simpan" class="text-xs text-emerald-600 font-semibold">Tersimpan &#10003;</span>
+        </div>
+      </div>
+
+      <!-- Pertanyaan & Gambar -->
+      <div class="space-y-3">
+        <div id="q-pertanyaan" class="text-base sm:text-[17px] leading-relaxed font-medium text-slate-900 whitespace-pre-line"></div>
+        <img id="q-gambar" alt="Gambar Soal" title="Klik untuk memperbesar gambar"
+          class="hidden max-h-72 rounded-xl border border-slate-200 cursor-zoom-in bg-slate-50 p-1" />
+      </div>
+
+      <!-- Area Jawaban Dinamis (7 Tipe Soal) -->
+      <div id="q-jawaban-area" class="pt-1"></div>
+
+      <!-- Navigasi Bawah -->
+      <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+        <button type="button" id="btn-prev-soal"
+          class="px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 disabled:opacity-40 text-slate-800 font-bold text-sm">
+          &larr; Sebelumnya
+        </button>
+
+        <button type="button" id="btn-ragu"
+          class="px-4 py-2.5 rounded-xl border-2 border-amber-400 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold text-sm flex items-center gap-2">
+          <span id="icon-ragu" class="w-3.5 h-3.5 rounded-sm border border-amber-600 inline-block"></span>
+          Ragu-Ragu
+        </button>
+
+        <button type="button" id="btn-next-soal"
+          class="px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm">
+          Selanjutnya &rarr;
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal Pop-Up Navigasi Nomor Soal -->
+  <div id="modal-navigasi-soal" class="fixed inset-0 bg-slate-950/70 z-40 hidden items-center justify-center p-4">
+    <div class="bg-white max-w-lg w-full rounded-2xl border border-slate-200 shadow-2xl overflow-hidden flex flex-col max-h-[88vh]">
+      <div class="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between border-b-2 border-blue-600">
+        <div>
+          <h3 class="font-extrabold text-sm">Navigasi Nomor Soal</h3>
+          <p id="nav-ringkasan-status" class="text-[11px] text-slate-300">Klik nomor untuk berpindah soal</p>
+        </div>
+        <button type="button" id="btn-close-nav-soal"
+          class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold text-xl leading-none flex items-center justify-center">
+          &times;
+        </button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-4">
+        <div id="grid-nomor-soal" class="grid grid-cols-5 sm:grid-cols-6 gap-2"></div>
+
+        <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
+          <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-emerald-600 inline-block"></span> Sudah Dijawab</div>
+          <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-amber-400 inline-block"></span> Ragu-Ragu</div>
+          <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-slate-100 border border-slate-300 inline-block"></span> Belum Dijawab</div>
+        </div>
+      </div>
+
+      <div class="px-5 py-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-2">
+        <span class="text-[11px] text-slate-500">Tombol <strong>Selesai Ujian</strong> ada di soal terakhir.</span>
+        <button type="button" id="btn-ke-soal-terakhir"
+          class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold shrink-0">
+          Ke Soal Terakhir &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/supabase-client.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/siswa-ujian.js"></script>
+</body>
+</html>

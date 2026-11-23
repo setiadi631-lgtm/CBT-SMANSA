@@ -97,25 +97,24 @@ select,
     page-break-inside: avoid !important;
   }
 }
-/* Menu Sidebar Panel Admin Tetap (Fixed) di Layar Desktop/Laptop */
 @media (min-width: 768px) {
   #admin-dashboard {
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    /* hapus: height: 100vh; overflow: hidden; */
   }
 
   #admin-dashboard > aside,
   #admin-dashboard > nav {
-    height: 100vh;
     position: sticky;
     top: 0;
+    height: 100vh;
     overflow-y: auto;
     flex-shrink: 0;
   }
 
   #admin-dashboard > main {
-    height: 100vh;
-    overflow-y: auto;
+    /* hapus: height: 100vh; overflow-y: auto; */
     flex: 1 1 0%;
+    min-width: 0;
   }
 }
